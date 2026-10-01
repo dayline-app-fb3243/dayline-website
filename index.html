@@ -111,6 +111,13 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 .phone-app-picture { position:absolute;inset:0;display:block; }
 .phone-app-picture img { width:100%;height:100%;max-width:none;object-fit:cover;display:block; }
 .phone-screen.has-app-capture .phone-time,.phone-screen.has-app-capture .phone-status,.phone-screen.has-app-capture .phone-island,.phone-screen.has-app-capture .phone-home { display:none; }
+
+/* Interior capture area matches supplied 1320x2868 reference (110:239). */
+.feature-media { --frame-width:210px;width:var(--frame-width);height:calc((var(--frame-width) - 12px) * 239 / 110 + 12px); }
+@media(max-width:600px){.feature-media{--frame-width:190px;}}
+.phone-screen { border-radius:27px; }
+.feature-media { border-radius:30px; }
+.phone-app-picture img { object-fit:contain; }
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
