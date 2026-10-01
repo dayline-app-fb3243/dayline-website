@@ -59,6 +59,13 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 .feature-copy li { font-size:17px;line-height:1.55;margin:18px 0;padding-left:6px; }
 @media(max-width:600px) { .feature-copy { min-height:100svh; padding-bottom:72px; } .overview { padding-bottom:16px; } }
 .scroll-mark { overflow:visible; }
+
+.text-line { display:block; }
+@media(prefers-reduced-motion:no-preference) {
+ .text-line { opacity:0;transform:translateY(24px);will-change:opacity,transform; }
+ .hero .text-line,.overview .text-line { animation:line-entrance 1100ms cubic-bezier(.16,1,.3,1) both;animation-delay:var(--line-delay); }
+ @keyframes line-entrance { from {opacity:0;transform:translateY(24px)} to {opacity:1;transform:translateY(0)} }
+}
 </style>
 </head>
 <body>
@@ -89,17 +96,38 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 <section class="feature" aria-labelledby="choice-title"><div class="feature-block"><div class="feature-media"><span>Your data screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="choice-title">What stays on your phone?</h2><p>Your timeline and journal stay local in this beta. Sign-in, maps and support email use online services. Profile &gt; Your data removes local app data, but does not delete your server account.</p><h3>Review your choices</h3><ol><li>Your timeline and journal do not sync to a Dayline server in this beta.</li><li>Profile > Your data signs you out and removes local app data.</li><li>This local reset does not delete your server account or every copy of your data. Read the privacy policy for the full limits.</li></ol></div></div></section>
 <footer>Dayline</footer>
 <script>
+
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+ document.querySelectorAll('.hero h1,.intro,.overview h2,.overview p,.feature-copy h2,.feature-copy h3,.feature-copy p,.feature-copy li').forEach(block => {
+  const parts=block.innerHTML.split(/<br\s*\/?\s*>/i); const lines=[];
+  parts.forEach(part => {
+   const scratch=document.createElement('span');scratch.innerHTML=part;
+   const words=scratch.textContent.trim().split(/\s+/);block.textContent='';
+   words.forEach((word,i)=> { const w=document.createElement('span');w.textContent=word+(i<words.length-1?' ':'');block.append(w); });
+   let top=null,line='';[...block.children].forEach(w=> {if(top!==null && w.offsetTop!==top){lines.push(line.trim());line='';}top=w.offsetTop;line+=w.textContent;});if(line)lines.push(line.trim());
+  });
+  block.textContent='';lines.forEach((text,i)=>{const line=document.createElement('span');line.className='text-line';line.textContent=text;line.style.setProperty('--line-delay',`${180+i*100}ms`);block.append(line);});
+ });
+ const lines=[...document.querySelectorAll('.feature-copy .text-line')];
+ if (CSS.supports('animation-timeline: view()')) {
+  lines.forEach(line=>line.classList.add('scroll-reveal'));
+ } else {
+  let queued=false;const update=()=>{queued=false;lines.forEach(line=>{const p=Math.max(0,Math.min(1,(innerHeight*.96-line.getBoundingClientRect().top)/(innerHeight*.25)));const e=1-Math.pow(1-p,3);line.style.opacity=e;line.style.transform=`translateY(${24*(1-e)}px)`;});};
+  addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(update);}},{passive:true});update();
+ }
+}
+
 if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
     if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
   }), {threshold: 0.15});
-  document.querySelectorAll('.app-mark, .hero h1, .intro, .policy-link, footer').forEach(element => {
+  document.querySelectorAll('.app-mark, .policy-link, footer').forEach(element => {
     element.classList.add('reveal'); observer.observe(element);
   });
 }
 
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
- const elements = [...document.querySelectorAll('.feature-media, .feature-copy h2, .feature-copy p')];
+ const elements = [...document.querySelectorAll('.feature-media')];
  elements.forEach(e => e.classList.add('scroll-reveal'));
  if (!CSS.supports('animation-timeline: view()')) {
   let scheduled = false;
