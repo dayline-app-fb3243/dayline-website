@@ -129,7 +129,10 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 .phone-status{color:#000;top:11px;right:13px;width:39px;height:8px;overflow:visible;}
 @media(min-width:601px){.phone-time{color:#000;left:calc(50% - 59px);top:12px;width:19px;height:8px;}.phone-status{color:#000;top:12px;right:14px;width:43px;height:9px;}}
 /* Placeholder screen follows appearance until paired app captures arrive. */
-@media(prefers-color-scheme:dark){:root{--status-fill:#fff;--battery-fill:#fff;--battery-bolt:#242426;--battery-border:#242426}.phone-screen{background:#242426}.phone-time,.phone-status{color:#fff;--status-fill:#fff}.phone-status{--battery-fill:#fff;--battery-bolt:#242426;--battery-border:#242426}.phone-home{background:#fff}}
+@media(prefers-color-scheme:dark){:root{--status-fill:#fff;--battery-fill:#30c759;--battery-bolt:#858585;--battery-border:#d7d7d7}.phone-screen{background:#242426}.phone-time,.phone-status{color:#fff;--status-fill:#fff}.phone-status{--battery-fill:#30c759;--battery-bolt:#858585;--battery-border:#d7d7d7}.phone-home{background:#fff}}
+/* Idle Island measured from private1320x2868 capture:284x110, top42. */
+.phone-island{width:21.5151515%;height:auto;aspect-ratio:284/110;top:calc((var(--frame-width) - 12px) * 42 / 1320);border-radius:999px;}
+.phone-island:after{display:none;}
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
