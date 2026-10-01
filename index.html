@@ -60,7 +60,7 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 @media(max-width:600px) { .feature-copy { min-height:100svh; padding-bottom:72px; } .overview { padding-bottom:16px; } }
 .scroll-mark { overflow:visible; }
 
-.text-line { display:block; }
+.text-line { display:block; text-wrap:initial; }
 @media(prefers-reduced-motion:no-preference) {
  .text-line { opacity:0;transform:translateY(24px);will-change:opacity,transform; }
  .hero .text-line,.overview .text-line { animation:line-entrance 1100ms cubic-bezier(.16,1,.3,1) both;animation-delay:var(--line-delay); }
@@ -103,7 +103,7 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
   parts.forEach(part => {
    const scratch=document.createElement('span');scratch.innerHTML=part;
    const words=scratch.textContent.trim().split(/\s+/);block.textContent='';
-   words.forEach((word,i)=> { const w=document.createElement('span');w.textContent=word+(i<words.length-1?' ':'');block.append(w); });
+   words.forEach((word,i)=> { const w=document.createElement('span');w.textContent=word+(i<words.length-1?' ':'');w.style.whiteSpace='nowrap';block.append(w); });
    let top=null,line='';[...block.children].forEach(w=> {if(top!==null && w.offsetTop!==top){lines.push(line.trim());line='';}top=w.offsetTop;line+=w.textContent;});if(line)lines.push(line.trim());
   });
   block.textContent='';lines.forEach((text,i)=>{const line=document.createElement('span');line.className='text-line';line.textContent=text;line.style.setProperty('--line-delay',`${180+i*100}ms`);block.append(line);});
