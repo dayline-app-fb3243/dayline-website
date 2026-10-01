@@ -302,7 +302,7 @@ if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
  const ctx=atlas.getContext('2d');
  for(let i=1;i<=count;i++){
   ctx.save();ctx.translate(i%columns*tile,Math.floor(i/columns)*tile);ctx.scale(tile/7680,tile/7680);
-  ctx.strokeStyle='#2585ee';ctx.lineWidth=991.130864;ctx.lineCap='round';
+  ctx.strokeStyle='#2585ee';ctx.lineWidth=991.130864;ctx.lineCap='round';ctx.globalAlpha=Math.min(1,i/16);
   paths.forEach((path,j)=>{ctx.setLineDash([lengths[j]]);ctx.lineDashOffset=lengths[j]*(1-i/count);ctx.stroke(path);});ctx.restore();
  }
  const windowElement=document.createElement('span'),image=document.createElement('img');
