@@ -166,6 +166,14 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
  .hero .text-line,.brand,.hero .policy-link,.scroll-mark .app-mark{animation-delay:300ms!important;animation-play-state:paused;}
  body.entrance-ready .hero .text-line,body.entrance-ready .brand,body.entrance-ready .hero .policy-link,body.entrance-ready .scroll-mark .app-mark{animation-play-state:running;}
 }
+/* Word-by-word entrance blend. Layout, header and logo stay still. */
+.brand{animation:none!important;opacity:1!important;transform:none!important;}
+@media(prefers-reduced-motion:no-preference){
+ .hero .text-line,.hero .policy-link,.scroll-mark .app-mark{animation:none!important;transform:none!important;opacity:1!important;}
+ .hero .entrance-word{display:inline-block;opacity:.08;transform:none;animation:word-blend 1400ms cubic-bezier(.25,.1,.25,1) both;animation-delay:var(--word-delay,300ms);animation-play-state:paused;}
+ body.entrance-ready .hero .entrance-word{animation-play-state:running;}
+ @keyframes word-blend{from{opacity:.08}to{opacity:1}}
+}
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -238,6 +246,11 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
    let top=null,line='';[...block.children].forEach(w=> {if(top!==null && w.offsetTop!==top){lines.push(line.trim());line='';}top=w.offsetTop;line+=w.textContent+' ';});if(line)lines.push(line.trim());
   });
   block.textContent='';lines.forEach((text,i)=>{const line=document.createElement('span');line.className='text-line';line.textContent=text;line.style.setProperty('--line-delay',`${160+i*180}ms`);block.append(line);});
+ });
+ let wordIndex=0;
+ document.querySelectorAll('.hero .text-line,.hero .policy-link').forEach(line=>{
+  const words=line.textContent.trim().split(/\s+/);line.textContent='';
+  words.forEach((text,i)=>{const word=document.createElement('span');word.className='entrance-word';word.textContent=text;word.style.setProperty('--word-delay',`${300+Math.min(wordIndex++*45,1000)}ms`);line.append(word);if(i<words.length-1)line.append(document.createTextNode(' '));});
  });
  const lines=[...document.querySelectorAll('.feature-copy .text-line')];
  if (CSS.supports('animation-timeline: view()')) {
