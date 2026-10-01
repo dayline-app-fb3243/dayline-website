@@ -78,8 +78,9 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 .feature-media { order:1; }
 .feature:last-of-type .feature-block { border-bottom:1px solid var(--line); }
 
-.hero h1 { position:relative;min-height:143px;margin-bottom:18px;display:flex;flex-direction:column;justify-content:flex-end; }
-@media(min-width:601px) { .hero h1 { min-height:136px; } }
+.hero h1 { position:relative;min-height:0;margin:20px 0 18px; }
+.scroll-mark,.scroll-mark .app-mark { width:72px;height:72px; }
+.scroll-mark { margin-bottom:0; }
 .hero-phrase { position:absolute;inset:0;width:100%;display:block;will-change:transform,opacity; }
 </style>
 </head>
@@ -117,10 +118,13 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
  let pair=0,busy=false;
  setInterval(async()=>{
   if(busy)return;busy=true;
+  const oldHeight=headline.offsetHeight;
   await headline.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-18px)'}],{duration:750,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished;
   headline.style.opacity='0';
   pair=(pair+1)%heroPairs.length;[...headline.children].forEach((r,i)=>r.textContent=heroPairs[pair][i]);
-  await headline.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'translateY(0)'}],{duration:850,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished;
+  const newHeight=headline.offsetHeight;
+  await headline.animate([{opacity:0,transform:'translateY(18px)',height:oldHeight+'px'},{opacity:1,transform:'translateY(0)',height:newHeight+'px'}],{duration:850,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished;
+  headline.style.opacity='1';headline.getAnimations().forEach(a=>a.cancel());
   busy=false;
  },5000);
 }
