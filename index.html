@@ -80,7 +80,8 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 
 .hero h1 { position:relative;min-height:0;margin:20px 0 18px; }
 .scroll-mark,.scroll-mark .app-mark { width:72px;height:72px; }
-.scroll-mark { margin-bottom:0; }
+.scroll-mark { margin-bottom:0;transform-origin:center; }
+.scroll-mark .app-mark { border-radius:0; }
 .hero-phrase { position:absolute;inset:0;width:100%;display:block;will-change:transform,opacity; }
 </style>
 </head>
@@ -89,9 +90,9 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 <main class="hero">
 <div class="scroll-mark"><svg class="app-mark" aria-label="Dayline spiral logo" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 7680 7680" version="1.2">
 <g id="surface1">
-<rect x="0" y="0" width="7680" height="7680" style="fill:rgb(14.509583%,52.156067%,93.331909%);fill-opacity:1;stroke:none;"/>
-<path style="fill:none;stroke-width:991.130864;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3840 1109.964844 C 4646.980469 1109.964844 5412.613281 1466.984375 5931.328125 2085.167969 C 6450.042969 2703.347656 6668.691406 3519.347656 6528.558594 4314.066406 C 6388.429688 5108.785156 5903.882812 5800.789062 5205.015625 6204.277344 C 4506.152344 6607.769531 3664.585938 6681.394531 2906.273438 6405.394531 C 2147.960938 6129.390625 1550.609375 5532.039062 1274.605469 4773.726562 C 998.605469 4015.414062 1072.230469 3173.847656 1475.722656 2474.984375 "/>
-<path style="fill:none;stroke-width:991.130864;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3840 2278.082031 C 4207.210938 2278.082031 4562.679688 2407.464844 4843.980469 2643.503906 C 5125.28125 2879.542969 5314.421875 3207.144531 5378.1875 3568.777344 C 5441.953125 3930.40625 5376.265625 4302.945312 5192.660156 4620.957031 C 4913.648438 5104.214844 4398.019531 5401.917969 3840 5401.917969 C 3281.980469 5401.917969 2766.351562 5104.214844 2487.339844 4620.957031 "/>
+
+<path style="fill:none;stroke-width:991.130864;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(14.509583%,52.156067%,93.331909%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3840 1109.964844 C 4646.980469 1109.964844 5412.613281 1466.984375 5931.328125 2085.167969 C 6450.042969 2703.347656 6668.691406 3519.347656 6528.558594 4314.066406 C 6388.429688 5108.785156 5903.882812 5800.789062 5205.015625 6204.277344 C 4506.152344 6607.769531 3664.585938 6681.394531 2906.273438 6405.394531 C 2147.960938 6129.390625 1550.609375 5532.039062 1274.605469 4773.726562 C 998.605469 4015.414062 1072.230469 3173.847656 1475.722656 2474.984375 "/>
+<path style="fill:none;stroke-width:991.130864;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(14.509583%,52.156067%,93.331909%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3840 2278.082031 C 4207.210938 2278.082031 4562.679688 2407.464844 4843.980469 2643.503906 C 5125.28125 2879.542969 5314.421875 3207.144531 5378.1875 3568.777344 C 5441.953125 3930.40625 5376.265625 4302.945312 5192.660156 4620.957031 C 4913.648438 5104.214844 4398.019531 5401.917969 3840 5401.917969 C 3281.980469 5401.917969 2766.351562 5104.214844 2487.339844 4620.957031 "/>
 </g>
 </svg></div>
 <h1 aria-live="off"><span class="hero-kicker" style="--line-delay:160ms">Your day.</span><span class="hero-headline" style="--line-delay:340ms">One clear timeline.</span></h1>
@@ -161,7 +162,7 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
     if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
   }), {threshold: 0.15});
-  document.querySelectorAll('.app-mark, .policy-link, footer').forEach(element => {
+  document.querySelectorAll('.policy-link, footer').forEach(element => {
     element.classList.add('reveal'); observer.observe(element);
   });
 }
@@ -182,7 +183,8 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
  const lengths=rings.map(r=>r.getTotalLength());
  rings.forEach((r,i)=>{r.style.strokeDasharray=lengths[i];});
  let shown=scrollY,target=scrollY,frame=0,last=0;
- const paint=()=>rings.forEach((ring,i)=>{const progress=.15+.85*Math.min(1,Math.max(0,shown/(i===0?120:170)));ring.style.strokeDashoffset=lengths[i]*(1-progress);});
+ const mark=document.querySelector('.scroll-mark');
+ const paint=()=>{const growth=Math.min(1,Math.max(0,shown/170));mark.style.transform=`scale(${1+.35*growth})`;rings.forEach((ring,i)=>{const progress=.15+.85*Math.min(1,Math.max(0,shown/(i===0?120:170)));ring.style.strokeDashoffset=lengths[i]*(1-progress);});};
  const tick=now=>{const dt=last?Math.min(40,now-last):16;last=now;shown+=(target-shown)*(1-Math.exp(-dt/28));if(Math.abs(target-shown)<.03)shown=target;paint();if(shown!==target){frame=requestAnimationFrame(tick);}else{frame=0;last=0;}};
  addEventListener('scroll',()=>{target=scrollY;if(!frame)frame=requestAnimationFrame(tick);},{passive:true});paint();
 }
