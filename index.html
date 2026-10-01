@@ -196,6 +196,14 @@ html{background:var(--bg);}
 
 /* Laptop body content starts at the left gutter; phone layouts stay unchanged. */
 @media(min-width:1024px){.overview{margin-left:32px;margin-right:0;}.feature-block{margin-left:32px;margin-right:0;}.feature-copy{margin-left:0;margin-right:0;}}
+
+/* Native momentum is never intercepted. Only entrance duration follows scroll speed. */
+html{scroll-behavior:auto!important}
+@media(prefers-reduced-motion:no-preference){
+ .body-enter{transition-duration:var(--copy-enter-ms,650ms)!important}
+ .feature-media.phone-enter{transition-duration:var(--phone-enter-ms,850ms)!important}
+ footer.reveal{transition-duration:var(--copy-enter-ms,650ms)!important;transition-delay:0ms!important}
+}
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -249,6 +257,14 @@ fill="var(--status-fill,#000)" stroke="none">
 <section class="feature" aria-labelledby="choice-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><svg class="phone-time" viewBox="0 0 116.85809 44" aria-hidden="true"><use href="#status-time" width="116.85809" height="44"/></svg><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 156 30" aria-hidden="true"><use href="#status-cellular" x="0" y="0" width="41" height="28"/><use href="#status-wifi" x="53" y="0" width="37" height="30"/><use href="#status-battery" x="102" y="0" width="55" height="29"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="choice-title">What stays on your phone?</h2><p>Your timeline and journal stay local in this beta. Removing local data does not delete your server account or every copy of your data.</p><h3>Remove local data</h3><ol><li>Open Profile &gt; Your data.</li><li>Tap Delete Local Account Data when signed in, or Delete Data on This iPhone. Confirm Delete.</li><li>This is permanent local removal. Read the privacy policy for the full limits.</li></ol></div></div></section>
 <footer><a href="#top">Dayline</a></footer>
 <script>
+
+// Passive scroll sampling: no layout reads, wheel/touch handlers or scroll cancellation.
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+ const root=document.documentElement;let lastY=scrollY,lastTime=performance.now(),scheduled=false,resetTimer=0,lastLevel=-1;
+ const setSpeed=level=>{level=Math.round(level*20)/20;if(level===lastLevel)return;lastLevel=level;root.style.setProperty('--copy-enter-ms',Math.round(650-560*level)+'ms');root.style.setProperty('--phone-enter-ms',Math.round(850-730*level)+'ms');};
+ const sample=()=>{scheduled=false;const now=performance.now(),y=scrollY,dt=Math.max(8,Math.min(50,now-lastTime)),speed=Math.abs(y-lastY)/dt;lastY=y;lastTime=now;setSpeed(Math.max(0,Math.min(1,(speed-.25)/1.75)));clearTimeout(resetTimer);resetTimer=setTimeout(()=>{lastY=scrollY;lastTime=performance.now();setSpeed(0);},220);};
+ addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(sample);}},{passive:true});setSpeed(0);
+}
 const heroPairs=[['Your day.','One clear timeline.'],['Your privacy.','Our priority.'],['Your places.','All in one timeline.'],['Your moments.','Close at hand.'],['Your journal.','In your words.']];
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
  const headline=document.querySelector('.hero h1');
