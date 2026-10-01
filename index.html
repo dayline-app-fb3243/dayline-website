@@ -62,9 +62,9 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 
 .text-line { display:block; text-wrap:initial; }
 .hero h1 { min-height:88px; }
-.hero-kicker { font-size:27px;line-height:1.3; }
-.hero-headline { font-size:34px;line-height:1.2; }
-@media(min-width:601px) { .hero h1 { min-height:125px; } .hero-kicker { font-size:38px; } .hero-headline { font-size:48px; } }
+.hero-kicker { display:block;font-size:27px;line-height:1.3; }
+.hero-headline { display:block;font-size:34px;line-height:1.2; }
+@media(min-width:601px) { .hero h1 { min-height:125px; } .hero-kicker { display:block;font-size:38px; } .hero-headline { display:block;font-size:48px; } }
 @supports(animation-timeline:view()) { @media(prefers-reduced-motion:no-preference) { .text-line.scroll-reveal { animation-timing-function:cubic-bezier(.25,.1,.25,1);animation-range:entry 0% cover 35%; } } }
 @media(prefers-reduced-motion:no-preference) {
  .text-line { opacity:0;transform:translateY(24px);will-change:opacity,transform; }
@@ -83,7 +83,7 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 <path style="fill:none;stroke-width:991.130864;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3840 2278.082031 C 4207.210938 2278.082031 4562.679688 2407.464844 4843.980469 2643.503906 C 5125.28125 2879.542969 5314.421875 3207.144531 5378.1875 3568.777344 C 5441.953125 3930.40625 5376.265625 4302.945312 5192.660156 4620.957031 C 4913.648438 5104.214844 4398.019531 5401.917969 3840 5401.917969 C 3281.980469 5401.917969 2766.351562 5104.214844 2487.339844 4620.957031 "/>
 </g>
 </svg></div>
-<h1 aria-live="off"><span class="hero-kicker text-line" style="--line-delay:160ms">Your day.</span><span class="hero-headline text-line" style="--line-delay:340ms">One clear timeline.</span></h1>
+<h1 aria-live="off"><span class="hero-kicker" style="--line-delay:160ms">Your day.</span><span class="hero-headline" style="--line-delay:340ms">One clear timeline.</span></h1>
 <p class="intro">A day planner with one clean visual timeline and a built-in assistant.</p>
 <a class="policy-link" href="/privacy">Read our privacy policy <span aria-hidden="true">›</span></a>
 </main>
@@ -104,7 +104,7 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 const heroPairs=[['Your day.','One clear timeline.'],['Your privacy.','Our priority.'],['Your plans.','All in one place.'],['Your moments.','Close at hand.'],['Your journal.','In your words.']];
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
  const headline=document.querySelector('.hero h1');const rows=[...headline.children];let pair=0;
- setTimeout(()=>{rows.forEach(r=>r.style.animation='none');setInterval(async()=>{
+ setTimeout(()=>{rows.forEach(r=>{r.style.animation='none';r.style.opacity='1';r.style.transform='none';});setInterval(async()=>{
   await Promise.all(rows.map((r,i)=>r.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-12px)'}],{duration:650,delay:i*100,easing:'cubic-bezier(.25,.1,.25,1)',fill:'forwards'}).finished));
   pair=(pair+1)%heroPairs.length;rows.forEach((r,i)=>r.textContent=heroPairs[pair][i]);
   rows.forEach((r,i)=>r.animate([{opacity:0,transform:'translateY(16px)'},{opacity:1,transform:'translateY(0)'}],{duration:1200,delay:i*160,easing:'cubic-bezier(.25,.1,.25,1)',fill:'forwards'}));
@@ -121,7 +121,7 @@ addEventListener('scroll',showCurrentPhone,{passive:true});addEventListener('res
 
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
  document.querySelectorAll('.intro,.overview h2,.overview p,.feature-copy h2,.feature-copy h3,.feature-copy p,.feature-copy li').forEach(block => {
-  const parts=block.innerHTML.split(/<br\s*\/?\s*>/i); const lines=[];
+  block.style.textWrap='initial';const parts=block.innerHTML.split(/<br\s*\/?\s*>/i); const lines=[];
   parts.forEach(part => {
    const scratch=document.createElement('span');scratch.innerHTML=part;
    const words=scratch.textContent.trim().split(/\s+/);block.textContent='';
