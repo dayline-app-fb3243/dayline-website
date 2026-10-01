@@ -170,9 +170,9 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 .brand{animation:none!important;opacity:1!important;transform:none!important;}
 @media(prefers-reduced-motion:no-preference){
  .hero .text-line,.hero .policy-link,.scroll-mark .app-mark{animation:none!important;transform:none!important;opacity:1!important;}
- .hero .entrance-word{display:inline-block;opacity:.08;transform:translateY(24px);animation:word-blend 1800ms cubic-bezier(.25,.1,.25,1) both;animation-delay:var(--word-delay,300ms);animation-play-state:paused;}
+ .hero .entrance-word{display:inline-block;opacity:0;transform:translateY(24px);animation:word-blend 1800ms cubic-bezier(.25,.1,.25,1) both;animation-delay:var(--word-delay,300ms);animation-play-state:paused;}
  body.entrance-ready .hero .entrance-word{animation-play-state:running;}
- @keyframes word-blend{from{opacity:.08;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+ @keyframes word-blend{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 }
 </style>
 <script type="text/javascript">
@@ -250,7 +250,7 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
  let entranceLine=0;
  document.querySelectorAll('.hero .text-line,.hero .policy-link').forEach(line=>{
   const words=line.textContent.trim().split(/\s+/);line.textContent='';
-  words.forEach((text,i)=>{const word=document.createElement('span');word.className='entrance-word';word.textContent=text;word.style.setProperty('--word-delay',`${300+Math.min(entranceLine*100,600)+i*30}ms`);line.append(word);if(i<words.length-1)line.append(document.createTextNode(' '));});entranceLine++;
+  words.forEach((text,i)=>{const word=document.createElement('span');word.className='entrance-word';word.textContent=text;word.style.setProperty('--word-delay',`${2200+Math.min(entranceLine*100,600)+i*30}ms`);line.append(word);if(i<words.length-1)line.append(document.createTextNode(' '));});entranceLine++;
  });
  const lines=[...document.querySelectorAll('.feature-copy .text-line')];
  if (CSS.supports('animation-timeline: view()')) {
