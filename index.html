@@ -46,23 +46,31 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 @media(max-width:600px) { .feature-block { grid-template-columns:1fr; gap:32px; } .feature { padding:52px 24px; } .feature-media { width:190px; height:390px; } }
 @media(prefers-reduced-motion:no-preference) { .scroll-reveal { opacity:0; transform:translateY(36px); will-change:opacity,transform; } }
 @supports(animation-timeline:view()) { @media(prefers-reduced-motion:no-preference) { .scroll-reveal { animation:scroll-flow linear both; animation-timeline:view(); animation-range:entry 0% entry 80%; } @keyframes scroll-flow { from { opacity:0;transform:translateY(36px); } to { opacity:1;transform:translateY(0); } } } }
+
+.overview { max-width:640px; margin:auto; padding:20px 24px 56px; }
+.overview h2 { font-size:26px;line-height:1.15;letter-spacing:-.022em;margin:0 0 18px; }
+.overview p { font-size:17px;line-height:1.47;margin:0 0 28px;color:var(--text); }
+.scroll-mark { width:64px;height:64px;margin:0 auto 22px;transform-origin:center; }
+.scroll-mark .app-mark { margin:0; }
+@media(prefers-reduced-motion:no-preference) { .scroll-mark { will-change:transform; } }
 </style>
 </head>
 <body>
 <header class="site-header"><a class="brand" href="/">Dayline</a></header>
 <main class="hero">
-<svg class="app-mark" aria-label="Dayline spiral logo" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 7680 7680" version="1.2">
+<div class="scroll-mark"><svg class="app-mark" aria-label="Dayline spiral logo" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 7680 7680" version="1.2">
 <g id="surface1">
 <rect x="0" y="0" width="7680" height="7680" style="fill:rgb(14.509583%,52.156067%,93.331909%);fill-opacity:1;stroke:none;"/>
 <path style="fill:none;stroke-width:991.130864;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3840 1109.964844 C 4646.980469 1109.964844 5412.613281 1466.984375 5931.328125 2085.167969 C 6450.042969 2703.347656 6668.691406 3519.347656 6528.558594 4314.066406 C 6388.429688 5108.785156 5903.882812 5800.789062 5205.015625 6204.277344 C 4506.152344 6607.769531 3664.585938 6681.394531 2906.273438 6405.394531 C 2147.960938 6129.390625 1550.609375 5532.039062 1274.605469 4773.726562 C 998.605469 4015.414062 1072.230469 3173.847656 1475.722656 2474.984375 "/>
 <path style="fill:none;stroke-width:991.130864;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3840 2278.082031 C 4207.210938 2278.082031 4562.679688 2407.464844 4843.980469 2643.503906 C 5125.28125 2879.542969 5314.421875 3207.144531 5378.1875 3568.777344 C 5441.953125 3930.40625 5376.265625 4302.945312 5192.660156 4620.957031 C 4913.648438 5104.214844 4398.019531 5401.917969 3840 5401.917969 C 3281.980469 5401.917969 2766.351562 5104.214844 2487.339844 4620.957031 "/>
 </g>
-</svg>
+</svg></div>
 <h1>Your day.<br>One clear timeline.</h1>
 <p class="intro">A day planner with one clean visual timeline and a built-in assistant.</p>
 <a class="policy-link" href="/privacy">Read our privacy policy <span aria-hidden="true">›</span></a>
 </main>
 
+<section class="overview" aria-labelledby="overview-title"><h2 id="overview-title">Meet your day in Dayline.</h2><p>Plan your day in one visual timeline. Keep your photos, places and journal close, then use the built-in assistant to search your day.</p><div class="feature-media"><span>Dayline overview screenshot<br>Coming here</span></div></section>
 <section class="feature" aria-labelledby="timeline-title"><div class="feature-block"><div class="feature-media"><span>App screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="timeline-title">A little more clarity.<br>For your whole day.</h2><p>Add your plans, then use the timeline to see them alongside the moments from your day.</p></div></div></section>
 <section class="feature" aria-labelledby="assistant-title"><div class="feature-block"><div class="feature-media"><span>App screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="assistant-title">Your day.<br>In your own words.</h2><p>Type a question or record a voice clip in Search. The assistant interprets searches with Apple's on-device models where available.</p></div></div></section>
 <section class="feature" aria-labelledby="moments-title"><div class="feature-block"><div class="feature-media"><span>App screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="moments-title">The moments.<br>And the memories.</h2><p>Allow access to the photos and places you want to include. Add journal text, voice clips or videos to keep your own notes about the day.</p></div></div></section>
@@ -93,6 +101,13 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   addEventListener('scroll', () => { if (!scheduled) { scheduled=true; requestAnimationFrame(update); } }, {passive:true});
   addEventListener('resize', update); update();
  }
+}
+
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+ const mark = document.querySelector('.scroll-mark');
+ let queued = false;
+ const animateMark = () => { queued=false;const p=Math.min(1,Math.max(0,scrollY/460));const eased=1-Math.pow(1-p,2);mark.style.transform=`translateY(${eased*28}px) rotate(${eased*135}deg) scale(${1-eased*.16})`; };
+ addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(animateMark);}},{passive:true});animateMark();
 }
 </script>
 </body>
