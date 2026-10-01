@@ -37,6 +37,15 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 :root { --panel:#f5f5f7; }
 @media(prefers-color-scheme:dark) { :root { --panel:#1d1d1f; } }
 @media(max-width:600px) { .feature { padding:36px 24px; } .feature h2 { font-size:26px; } .feature p { font-size:17px; } .feature-block:has(.feature-media img) { grid-template-columns:1fr; } }
+
+.feature-media { width:210px; height:430px; margin:auto; border:2px solid var(--line); border-radius:36px; display:grid; place-items:center; padding:24px; color:var(--secondary); position:relative; }
+.feature-media:before { content:""; position:absolute; width:70px; height:16px; border:1px solid var(--line); border-radius:12px; top:14px; left:calc(50% - 35px); }
+.feature-media span { font-size:13px; line-height:1.5; text-align:center; }
+.feature-block { grid-template-columns:240px 1fr; }
+.feature-copy { padding-top:32px; }
+@media(max-width:600px) { .feature-block { grid-template-columns:1fr; gap:32px; } .feature { padding:52px 24px; } .feature-media { width:190px; height:390px; } }
+@media(prefers-reduced-motion:no-preference) { .scroll-reveal { opacity:0; transform:translateY(36px); will-change:opacity,transform; } }
+@supports(animation-timeline:view()) { @media(prefers-reduced-motion:no-preference) { .scroll-reveal { animation:scroll-flow linear both; animation-timeline:view(); animation-range:entry 0% entry 80%; } @keyframes scroll-flow { from { opacity:0;transform:translateY(36px); } to { opacity:1;transform:translateY(0); } } } }
 </style>
 </head>
 <body>
@@ -54,19 +63,36 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 <a class="policy-link" href="/privacy">Read our privacy policy <span aria-hidden="true">›</span></a>
 </main>
 
-<section class="feature" aria-labelledby="timeline-title"><div class="feature-block"><div class="feature-media"></div><div class="feature-copy"><h2 id="timeline-title">A little more clarity.<br>For your whole day.</h2><p>See your plans and moments in one clean visual timeline.</p></div></div></section>
-<section class="feature" aria-labelledby="assistant-title"><div class="feature-block"><div class="feature-media"></div><div class="feature-copy"><h2 id="assistant-title">Your day.<br>In your own words.</h2><p>Search your day with the built-in assistant. Search interpretation uses Apple's on-device models where available.</p></div></div></section>
-<section class="feature" aria-labelledby="moments-title"><div class="feature-block"><div class="feature-media"></div><div class="feature-copy"><h2 id="moments-title">The moments.<br>And the memories.</h2><p>Bring photos, places and journal entries into your day. You choose which permissions to share.</p></div></div></section>
-<section class="feature" aria-labelledby="privacy-title"><div class="feature-block"><div class="feature-media"></div><div class="feature-copy"><h2 id="privacy-title">Your day stays<br>your business.</h2><p>Your timeline and journal are stored on your device in this beta. No ads or third-party tracking. Sign-in and maps use online services.</p></div></div></section>
+<section class="feature" aria-labelledby="timeline-title"><div class="feature-block"><div class="feature-media"><span>App screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="timeline-title">A little more clarity.<br>For your whole day.</h2><p>Add your plans, then use the timeline to see them alongside the moments from your day.</p></div></div></section>
+<section class="feature" aria-labelledby="assistant-title"><div class="feature-block"><div class="feature-media"><span>App screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="assistant-title">Your day.<br>In your own words.</h2><p>Type a question or record a voice clip in Search. The assistant interprets searches with Apple's on-device models where available.</p></div></div></section>
+<section class="feature" aria-labelledby="moments-title"><div class="feature-block"><div class="feature-media"><span>App screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="moments-title">The moments.<br>And the memories.</h2><p>Allow access to the photos and places you want to include. Add journal text, voice clips or videos to keep your own notes about the day.</p></div></div></section>
+<section class="feature" aria-labelledby="privacy-title"><div class="feature-block"><div class="feature-media"><span>App screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="privacy-title">Your day stays<br>your business.</h2><p>Your timeline and journal are stored on your device in this beta. No ads or third-party tracking. Sign-in and maps use online services.</p></div></div></section>
+
+<section class="feature" aria-labelledby="how-title"><div class="feature-block"><div class="feature-media"><span>Plans screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="how-title">Start with your plans.</h2><p>Add the plans you want to keep track of. Your timeline gives them one place to live, alongside your journal and saved moments.</p></div></div></section>
+<section class="feature" aria-labelledby="build-title"><div class="feature-block"><div class="feature-media"><span>Timeline screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="build-title">Let your day build.</h2><p>With your permission, Dayline saves location samples and visits, and adds photo references to your timeline. You control access in iOS Settings.</p></div></div></section>
+<section class="feature" aria-labelledby="voice-title"><div class="feature-block"><div class="feature-media"><span>Journal screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="voice-title">Keep a note.<br>Or say it out loud.</h2><p>Save journal text, recordings or videos. Voice transcription uses on-device recognition. Microphone access is used only while recording.</p></div></div></section>
+<section class="feature" aria-labelledby="tips-title"><div class="feature-block"><div class="feature-media"><span>Settings screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="tips-title">A few useful tips.</h2><p>Choose which photos Dayline can access. Pick your route-point interval. Change permissions any time in iOS Settings.</p></div></div></section>
+<section class="feature" aria-labelledby="choice-title"><div class="feature-block"><div class="feature-media"><span>Your data screenshot<br>Coming here</span></div><div class="feature-copy"><h2 id="choice-title">What stays on your phone?</h2><p>Your timeline and journal stay local in this beta. Sign-in, maps and support email use online services. Profile &gt; Your data removes local app data, but does not delete your server account.</p></div></div></section>
 <footer>Dayline</footer>
 <script>
 if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
     if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
   }), {threshold: 0.15});
-  document.querySelectorAll('.app-mark, .hero h1, .intro, .policy-link, .feature-copy h2, .feature-copy p, .feature-media, footer').forEach(element => {
+  document.querySelectorAll('.app-mark, .hero h1, .intro, .policy-link, footer').forEach(element => {
     element.classList.add('reveal'); observer.observe(element);
   });
+}
+
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+ const elements = [...document.querySelectorAll('.feature-media, .feature-copy h2, .feature-copy p')];
+ elements.forEach(e => e.classList.add('scroll-reveal'));
+ if (!CSS.supports('animation-timeline: view()')) {
+  let scheduled = false;
+  const update = () => { scheduled = false; elements.forEach(e => { const t = e.getBoundingClientRect().top; const p = Math.max(0, Math.min(1, (innerHeight * .96 - t) / (innerHeight * .36))); const ease = 1 - Math.pow(1-p, 3); e.style.opacity = ease; e.style.transform = `translateY(${36*(1-ease)}px)`; }); };
+  addEventListener('scroll', () => { if (!scheduled) { scheduled=true; requestAnimationFrame(update); } }, {passive:true});
+  addEventListener('resize', update); update();
+ }
 }
 </script>
 </body>
