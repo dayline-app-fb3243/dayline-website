@@ -78,7 +78,8 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 .feature-media { order:1; }
 .feature:last-of-type .feature-block { border-bottom:1px solid var(--line); }
 
-.hero h1 { position:relative; }
+.hero h1 { position:relative;min-height:143px;margin-bottom:18px;display:flex;flex-direction:column;justify-content:flex-end; }
+@media(min-width:601px) { .hero h1 { min-height:136px; } }
 .hero-phrase { position:absolute;inset:0;width:100%;display:block;will-change:transform,opacity; }
 </style>
 </head>
@@ -113,15 +114,14 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 const heroPairs=[['Your day.','One clear timeline.'],['Your privacy.','Our priority.'],['Your plans.','All in one place.'],['Your moments.','Close at hand.'],['Your journal.','In your words.']];
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
  const headline=document.querySelector('.hero h1');
- const first=document.createElement('span');first.className='hero-phrase';while(headline.firstChild)first.append(headline.firstChild);headline.append(first);
- const second=first.cloneNode(true);second.style.opacity='0';second.setAttribute('aria-hidden','true');headline.append(second);
- let active=first,incoming=second,pair=0;
- setInterval(()=>{
-  pair=(pair+1)%heroPairs.length;[...incoming.children].forEach((r,i)=>r.textContent=heroPairs[pair][i]);
-  incoming.setAttribute('aria-hidden','false');active.setAttribute('aria-hidden','true');
-  active.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-10px)'}],{duration:1600,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});
-  incoming.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:1600,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});
-  [active,incoming]=[incoming,active];
+ let pair=0,busy=false;
+ setInterval(async()=>{
+  if(busy)return;busy=true;
+  await headline.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-18px)'}],{duration:750,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished;
+  headline.style.opacity='0';
+  pair=(pair+1)%heroPairs.length;[...headline.children].forEach((r,i)=>r.textContent=heroPairs[pair][i]);
+  await headline.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'translateY(0)'}],{duration:850,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished;
+  busy=false;
  },5000);
 }
 const phoneSlots=[...document.querySelectorAll('.feature-media')];
