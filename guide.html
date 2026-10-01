@@ -200,7 +200,7 @@ html.return-home body{animation:none!important;}
 
 .overview{padding-top:36px;}.overview:before{display:none;}
 
-.text-line,.body-enter,.phone-enter,.scroll-reveal,.reveal{opacity:1!important;transform:none!important;animation:none!important;}
+
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -243,5 +243,19 @@ fill="var(--status-fill,#000)" stroke="none">
 <section class="feature" aria-labelledby="choice-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><svg class="phone-time" viewBox="0 0 116.85809 44" aria-hidden="true"><use href="#status-time" width="116.85809" height="44"/></svg><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 156 30" aria-hidden="true"><use href="#status-cellular" x="0" y="0" width="41" height="28"/><use href="#status-wifi" x="53" y="0" width="37" height="30"/><use href="#status-battery" x="102" y="0" width="55" height="29"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="choice-title">What stays on your phone?</h2><p>Your timeline and journal stay local in this beta. This is permanent local removal. It does not delete your server account or every copy of your data.</p><h3>Remove local data</h3><ol><li><strong>Open Profile.</strong> Tap the rightmost Profile tab, marked with the person icon, in the bottom bar.</li><li><strong>Open Your data.</strong> Tap Your data to open the local data controls.</li><li><strong>Choose local removal.</strong> Tap Delete Local Account Data when signed in, or Delete Data on This iPhone.</li><li><strong>Confirm deletion.</strong> Tap Delete in the confirmation to permanently remove the local data.</li></ol></div></div></section>
 <footer><a href="/">Dayline</a></footer>
 
+<script>
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+ const bodyEntrance = new IntersectionObserver(entries => entries.forEach(entry => {
+  if (entry.isIntersecting) { entry.target.classList.add('body-entered'); bodyEntrance.unobserve(entry.target); }
+ }), {rootMargin:'0px 0px -4% 0px', threshold:0});
+ document.querySelectorAll('.feature-copy h2,.feature-copy h3,.feature-copy p,.feature-copy li').forEach(block => {
+  block.classList.add('body-enter'); bodyEntrance.observe(block);
+ });
+ const phoneEntrance = new IntersectionObserver(entries => entries.forEach(entry => {
+  if (entry.isIntersecting) { entry.target.classList.add('phone-entered'); phoneEntrance.unobserve(entry.target); }
+ }), {threshold:.08});
+ document.querySelectorAll('.feature-media').forEach(phone => {phone.classList.add('phone-enter');phoneEntrance.observe(phone);});
+}
+</script>
 </body>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </html>
