@@ -252,7 +252,7 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
  let entranceLine=0;
  document.querySelectorAll('.hero .text-line,.hero .policy-link').forEach(line=>{
   const words=line.textContent.trim().split(/\s+/);line.textContent='';
-  words.forEach((text,i)=>{const word=document.createElement('span');word.className='entrance-word';word.textContent=text;word.style.setProperty('--word-delay',`${2200+Math.min(entranceLine*100,600)+i*30}ms`);line.append(word);if(i<words.length-1)line.append(document.createTextNode(' '));});entranceLine++;
+  words.forEach((text,i)=>{const word=document.createElement('span');word.className='entrance-word';word.textContent=text;word.style.setProperty('--word-delay',`${300+Math.min(entranceLine*100,600)+i*30}ms`);line.append(word);if(i<words.length-1)line.append(document.createTextNode(' '));});entranceLine++;
  });
  const lines=[...document.querySelectorAll('.feature-copy .text-line')];
  if (CSS.supports('animation-timeline: view()')) {
@@ -280,13 +280,13 @@ const mark=document.querySelector('.scroll-mark');
 mark.style.transform='scale(1.5)';
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
  const rings=[...mark.querySelectorAll('path')],lengths=rings.map(r=>r.getTotalLength());
- let entranceStart=Infinity;const entranceDuration=1800;
- const beginEntrance=()=>{document.body.classList.add('entrance-ready');entranceStart=performance.now();if(!frame)frame=requestAnimationFrame(tick);};
+ let entranceStart=Infinity;let restoredScroll=false;const entranceDuration=1800;
+ const beginEntrance=()=>{document.body.classList.add('entrance-ready');restoredScroll=scrollY>1;shown=target=scrollY;entranceStart=performance.now();if(!frame)frame=requestAnimationFrame(tick);};
  if(document.readyState==='complete')requestAnimationFrame(()=>requestAnimationFrame(beginEntrance));else addEventListener('load',()=>requestAnimationFrame(()=>requestAnimationFrame(beginEntrance)),{once:true});
  rings.forEach((r,i)=>{r.style.strokeDasharray=lengths[i];});
  let shown=scrollY,target=scrollY,frame=0,last=0,emptyAt=1;
  const measure=()=>{emptyAt=innerWidth<=600?220:Math.max(220,mark.offsetTop+mark.offsetHeight);};
- const paint=()=>{const p=Math.min(1,Math.max(0,shown/emptyAt));const t=Math.max(0,Math.min(1,(performance.now()-entranceStart-300)/entranceDuration));const draw=1-Math.pow(1-t,3);mark.style.transform=`scale(${1.5+.3*p})`;rings.forEach((r,i)=>{r.style.strokeDashoffset=lengths[i]*(1-draw);r.style.visibility=draw===0?'hidden':'visible';});};
+ const paint=()=>{const p=Math.min(1,Math.max(0,shown/emptyAt));const t=Math.max(0,Math.min(1,(performance.now()-entranceStart-300)/entranceDuration));const draw=restoredScroll?1:1-Math.pow(1-t,3);mark.style.transform='scale(1.5)';rings.forEach((r,i)=>{r.style.strokeDashoffset=lengths[i]*(1-draw*(1-p));r.style.visibility=draw===0||p>=1?'hidden':'visible';});};
  const tick=now=>{const dt=last?Math.min(40,now-last):16;last=now;shown+=(target-shown)*(1-Math.exp(-dt/45));if(Math.abs(target-shown)<.03)shown=target;paint();if(shown!==target||now<entranceStart+300+entranceDuration){frame=requestAnimationFrame(tick);}else{frame=0;last=0;}};
  measure();paint();frame=requestAnimationFrame(tick);
  addEventListener('scroll',()=>{target=scrollY;if(!frame)frame=requestAnimationFrame(tick);},{passive:true});
