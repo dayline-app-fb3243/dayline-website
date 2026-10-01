@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en-US">
 <head>
-<script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(sessionStorage.getItem('dayline-opening-v1')!=='seen'||new URLSearchParams(location.search).has('intro-preview')))document.documentElement.classList.add('opening-active');}catch{}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dayline | Your day, in one timeline</title>
@@ -106,11 +105,6 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 .feature-media { margin:0;align-self:flex-start; }
 .feature-copy { margin:0;align-self:flex-start; }
 .phone-status { width:41px;height:8px;top:10px;right:10px; }
-.opening-layer { position:fixed;inset:0;z-index:100;background:var(--bg);pointer-events:none; }
-.opening-mark { position:fixed;transform-origin:0 0; }
-.opening-mark svg { width:100%;height:100%;display:block;overflow:visible; }
-html.opening-active .scroll-mark { opacity:0; }
-html.opening-active .hero h1,html.opening-active .intro,html.opening-active .policy-link,html.opening-active .overview { opacity:0; }
 
 @media(prefers-reduced-motion:no-preference){.feature-media.phone-enter{opacity:0;transform:translateY(24px);transition:opacity 850ms cubic-bezier(.25,.1,.25,1),transform 850ms cubic-bezier(.25,.1,.25,1)}.feature-media.phone-enter.phone-entered{opacity:1;transform:translateY(0)}}
 
@@ -217,32 +211,7 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
  addEventListener('resize',()=>{measure();paint();});
 }
 
-(async function openingIntro(){
- const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
- const demo=new URLSearchParams(location.search).get('intro-preview');
- let seen=false;try{seen=sessionStorage.getItem('dayline-opening-v1')==='seen';}catch{}
- if(reduced || (seen&&!demo) || scrollY>10){document.documentElement.classList.remove("opening-active");return;}
- try{sessionStorage.setItem('dayline-opening-v1','seen');}catch{}
- const root=document.documentElement;root.classList.add('opening-active');
- const layer=document.createElement('div');layer.className='opening-layer';layer.setAttribute('aria-hidden','true');
- const clone=document.createElement('div');clone.className='opening-mark';clone.append(mark.querySelector('svg').cloneNode(true));layer.append(clone);document.body.append(layer);
- const target=mark.getBoundingClientRect();
- const size=Math.min((innerWidth-2*37.8)/.86,(innerHeight-2*37.8)/.86,720);
- const x=(innerWidth-size)/2,y=(innerHeight-size)/2;
- Object.assign(clone.style,{left:x+'px',top:y+'px',width:size+'px',height:size+'px'});
- const paths=[...clone.querySelectorAll('path')];
- paths.forEach((p,i)=>{const n=p.getTotalLength();p.style.strokeDasharray=n;p.style.strokeDashoffset=n*(i===0?.08:.28);p.style.visibility='visible';});
- const duration=2200,easing='cubic-bezier(.22,1,.36,1)';
- const move=clone.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${target.left-x}px,${target.top-y}px) scale(${target.width/size})`}],{duration,delay:250,easing,fill:'forwards'});
- const anims=[move];
- paths.forEach(p=>anims.push(p.animate([{strokeDashoffset:p.style.strokeDashoffset},{strokeDashoffset:'0'}],{duration,delay:250,easing,fill:'forwards'})));
- anims.push(layer.animate([{backgroundColor:getComputedStyle(root).getPropertyValue('--bg').trim()},{backgroundColor:'transparent'}],{duration:600,delay:1100,fill:'forwards'}));
- const text=[...document.querySelectorAll('.hero h1,.intro,.policy-link,.overview')];
- text.forEach((e,i)=>anims.push(e.animate([{opacity:0,transform:'translateY(32px)'},{opacity:1,transform:'translateY(0)'}],{duration:1000,delay:1250+i*100,easing,fill:'forwards'})));
- if(demo==='start'||demo==='middle') {const time=demo==='start'?0:1300;anims.forEach(a=>{a.pause();a.currentTime=time;});return;}
- await move.finished;root.classList.remove('opening-active');layer.remove();
- await Promise.all(anims.map(a=>a.finished.catch(()=>{})));anims.forEach(a=>a.cancel());
-})();
+
 
 // Future reviewed captures: native picture media selection follows system appearance.
 // No URLs or images are installed until both reviewed light and dark captures are provided.
