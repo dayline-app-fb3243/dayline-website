@@ -71,6 +71,12 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
  .hero .text-line,.overview .text-line { animation:line-entrance 1800ms cubic-bezier(.25,.1,.25,1) both;animation-delay:var(--line-delay); }
  @keyframes line-entrance { from {opacity:0;transform:translateY(24px)} to {opacity:1;transform:translateY(0)} }
 }
+
+.feature { padding-top:0;padding-bottom:0; }
+.feature-block { display:flex;flex-direction:column;border-top:1px solid var(--line);padding:36px 0 48px;gap:28px; }
+.feature-copy { order:0;border:0;padding:0; }
+.feature-media { order:1; }
+.feature:last-of-type .feature-block { border-bottom:1px solid var(--line); }
 </style>
 </head>
 <body>
