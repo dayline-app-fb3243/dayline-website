@@ -6,22 +6,23 @@
 <title>Dayline | Your day, in one timeline</title>
 <meta name="description" content="Dayline, a day planner and personal timeline for iPhone.">
 <style>
-:root { color-scheme: light; }
+:root { color-scheme: light dark; --bg: #fff; --text: #1d1d1f; --secondary: #86868b; --line: #e8e8ed; --accent: #2585ee; }
 * { box-sizing: border-box; }
-body { margin: 0; background: #fff; color: #1d1d1f; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-a { color: #2585ee; text-decoration: none; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
-.site-header { max-width: 980px; margin: 0 auto; padding: 22px 32px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f0f2; }
-.brand { color: #1d1d1f; font-size: 20px; font-weight: 600; letter-spacing: -.025em; }
-.site-header .privacy { color: #6e6e73; font-size: 13px; font-weight: 400; }
+.site-header { max-width: 980px; margin: 0 auto; padding: 22px 32px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.brand { color: var(--text); font-size: 20px; font-weight: 600; letter-spacing: -.025em; }
+.site-header .privacy { color: var(--secondary); font-size: 13px; font-weight: 400; }
 .hero { max-width: 760px; margin: 0 auto; padding: 88px 28px 110px; text-align: center; }
 .app-mark { display: block; width: 64px; height: 64px; margin: 0 auto 22px; border-radius: 17px; }
-.badge { display: inline-block; font-size: 12px; line-height: 1.5; font-weight: 500; color: #2585ee; background: #f0f7ff; padding: 5px 12px; border-radius: 999px; letter-spacing: .01em; }
-h1 { margin: 26px 0 18px; font-size: 48px; line-height: 1.12; font-weight: 600; letter-spacing: -.035em; }
-.intro { max-width: 470px; margin: 0 auto; color: #6e6e73; font-size: 20px; line-height: 1.5; font-weight: 400; letter-spacing: -.015em; text-wrap: balance; }
+.badge { display: inline-block; font-size: 12px; line-height: 1.5; font-weight: 500; color: var(--accent); background: #f0f7ff; padding: 5px 12px; border-radius: 999px; letter-spacing: .01em; }
+h1 { margin: 26px 0 18px; font-size: 64px; line-height: 1.06; font-weight: 700; letter-spacing: -.022em; }
+.intro { max-width: 470px; margin: 0 auto; color: var(--secondary); font-size: 19px; line-height: 1.47; font-weight: 400; letter-spacing: -.015em; text-wrap: balance; }
  .policy-link { display: inline-block; margin-top: 30px; font-size: 15px; line-height: 1.5; font-weight: 400; letter-spacing: -.01em; }
-footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 1px solid #f0f0f2; color: #86868b; font-size: 12px; line-height: 1.5; }
-@media (max-width: 600px) { .site-header { padding: 20px 24px; } .hero { padding: 66px 24px 88px; } h1 { font-size: 36px; line-height: 1.16; letter-spacing: -.03em; } .intro { max-width: 310px; font-size: 18px; line-height: 1.5; } footer { margin: 0 24px; padding: 20px 0 26px; } }
+footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 1px solid var(--line); color: var(--secondary); font-size: 12px; line-height: 1.5; }
+@media (max-width: 600px) { .site-header { padding: 20px 24px; } .hero { padding: 66px 24px 88px; } h1 { font-size: 44px; line-height: 1.08; letter-spacing: -.022em; } .intro { max-width: 310px; font-size: 19px; line-height: 1.47; } footer { margin: 0 24px; padding: 20px 0 26px; } }
+@media (prefers-color-scheme: dark) { :root { --bg: #000; --text: #f5f5f7; --secondary: #86868b; --line: #29292c; --accent: #2997ff; } }
 </style>
 </head>
 <body>
