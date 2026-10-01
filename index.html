@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script>try{if(sessionStorage.getItem("dayline-return")==="1"){sessionStorage.removeItem("dayline-return");document.documentElement.classList.add("return-home");}}catch(e){}</script>
 <title>Dayline | Your day, in one timeline</title>
 <meta name="description" content="Dayline, a day planner and personal timeline for iPhone.">
 <style>
@@ -176,6 +177,8 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
  body.entrance-ready .hero .entrance-word{animation-play-state:running;}
  @keyframes word-blend{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 }
+html{background:var(--bg);}
+@media(prefers-reduced-motion:no-preference){html.return-home body{animation:return-home 320ms cubic-bezier(.25,.1,.25,1) both;}@keyframes return-home{from{opacity:0;transform:translate3d(24px,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}}
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -296,7 +299,9 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
  const tick=now=>{frame=0;paint(now);if(!restoredScroll&&Number.isFinite(entranceStart)&&now<entranceStart+300+entranceDuration)queue();};
  const beginEntrance=()=>{measure();restoredScroll=scrollY>1;entranceStart=performance.now();document.body.classList.add('entrance-ready');queue();};
  measure();paint(performance.now());
- if(document.readyState==='complete')requestAnimationFrame(()=>requestAnimationFrame(beginEntrance));else addEventListener('load',()=>requestAnimationFrame(()=>requestAnimationFrame(beginEntrance)),{once:true});
+ let began=false;const startEntrance=()=>{if(began)return;began=true;requestAnimationFrame(()=>requestAnimationFrame(beginEntrance));};
+ if(document.readyState==='loading')addEventListener('DOMContentLoaded',startEntrance,{once:true});else startEntrance();
+ addEventListener('pageshow',()=>{if(!began)startEntrance();else queue();});
  addEventListener('scroll',queue,{passive:true});
  const remeasure=()=>{measure();queue();};
  addEventListener('resize',remeasure,{passive:true});
