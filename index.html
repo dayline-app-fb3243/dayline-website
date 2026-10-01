@@ -180,6 +180,14 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 html{background:var(--bg);}
 @media(prefers-reduced-motion:no-preference){html.return-home body{animation:return-home 320ms cubic-bezier(.25,.1,.25,1) both;}@keyframes return-home{from{opacity:0;transform:translate3d(24px,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}}
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth;}}
+
+/* Keep the scroll surface small: one-shot body entrances instead of hundreds of persistent text layers. */
+.text-line,.hero-phrase{will-change:auto;}
+.hero .entrance-word.entrance-finished{animation:none!important;opacity:1;transform:none;}
+.overview .text-line.entrance-finished{animation:none!important;opacity:1;transform:none;}
+.feature{contain:layout style;}
+.feature-media{contain:layout style;}
+@media(prefers-reduced-motion:no-preference){.body-enter{opacity:0;transform:translate3d(0,24px,0);transition:opacity 650ms cubic-bezier(.25,.1,.25,1),transform 650ms cubic-bezier(.25,.1,.25,1)}.body-enter.body-entered{opacity:1;transform:none}}
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -250,7 +258,7 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
  },15000);
 }
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
- document.querySelectorAll('.hero-kicker,.hero-headline,.intro,.overview h2,.overview p,.feature-copy h2,.feature-copy h3,.feature-copy p,.feature-copy li').forEach(block => {
+ document.querySelectorAll('.hero-kicker,.hero-headline,.intro,.overview h2').forEach(block => {
   block.style.textWrap='initial';const parts=block.innerHTML.split(/<br\s*\/?\s*>/i); const lines=[];
   parts.forEach(part => {
    const scratch=document.createElement('span');scratch.innerHTML=part;
@@ -265,13 +273,10 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const words=line.textContent.trim().split(/\s+/);line.textContent='';
   words.forEach((text,i)=>{const word=document.createElement('span');word.className='entrance-word';word.textContent=text;word.style.setProperty('--word-delay',`${300+Math.min(entranceLine*100,600)+i*30}ms`);line.append(word);if(i<words.length-1)line.append(document.createTextNode(' '));});entranceLine++;
  });
- const lines=[...document.querySelectorAll('.feature-copy .text-line')];
- if (CSS.supports('animation-timeline: view()')) {
-  lines.forEach(line=>line.classList.add('scroll-reveal'));
- } else {
-  let queued=false;const update=()=>{queued=false;lines.forEach(line=>{const p=Math.max(0,Math.min(1,(innerHeight*.96-line.getBoundingClientRect().top)/(innerHeight*.25)));const e=1-Math.pow(1-p,3);line.style.opacity=e;line.style.transform=`translateY(${24*(1-e)}px)`;});};
-  addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(update);}},{passive:true});update();
- }
+ // Body copy enters once as a block. No per-line scroll timelines or layout-reading scroll listener.
+ document.querySelectorAll('.hero .entrance-word,.overview .text-line').forEach(element=>element.addEventListener('animationend',()=>element.classList.add('entrance-finished'),{once:true}));
+ const bodyEntrance=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('body-entered');bodyEntrance.unobserve(entry.target);}}),{rootMargin:'0px 0px -4% 0px',threshold:0});
+ document.querySelectorAll('.feature-copy h2,.feature-copy h3,.feature-copy p,.feature-copy li').forEach(block=>{block.classList.add('body-enter');bodyEntrance.observe(block);});
 }
 
 if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
