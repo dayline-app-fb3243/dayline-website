@@ -110,6 +110,8 @@ footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 
 .opening-mark svg { width:100%;height:100%;display:block;overflow:visible; }
 html.opening-active .scroll-mark { visibility:hidden; }
 html.opening-active .hero h1,html.opening-active .intro,html.opening-active .policy-link,html.opening-active .overview { opacity:0; }
+
+@media(prefers-reduced-motion:no-preference){.feature-media.phone-enter{opacity:0;transform:translateY(24px);transition:opacity 850ms cubic-bezier(.25,.1,.25,1),transform 850ms cubic-bezier(.25,.1,.25,1)}.feature-media.phone-enter.phone-entered{opacity:1;transform:translateY(0)}}
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -192,6 +194,10 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
   });
 }
 
+if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+ const entrance=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('phone-entered');entrance.unobserve(entry.target);}}),{threshold:.08});
+ document.querySelectorAll('.feature-media').forEach(e=>{e.classList.add('phone-enter');entrance.observe(e);});
+}
 const mark=document.querySelector('.scroll-mark');
 mark.style.transform='scale(1.5)';
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
