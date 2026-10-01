@@ -15,5 +15,5 @@ h1{font-size:56px;line-height:1.08;letter-spacing:-.022em;margin:0 0 28px;font-w
 footer{padding:24px 0 32px;border-top:1px solid var(--line);color:var(--secondary);font-size:12px}
 @media(max-width:600px){.policy{padding:54px 0 64px}.policy h1{font-size:44px}.policy h2{font-size:25px;margin-top:44px}.policy p,.policy li{font-size:17px;line-height:1.47}}
 @media(prefers-color-scheme:dark){:root{--bg:#000;--text:#f5f5f7;--secondary:#86868b;--line:#29292c;--accent:#2997ff}}
-.policy h1,.policy h2{text-align:center;text-wrap:balance;max-width:620px;margin-left:auto;margin-right:auto}
+.policy h1,.policy h2{text-align:left;text-wrap:wrap;max-width:none;margin-left:0;margin-right:0}
 .policy section{padding-top:16px;margin-top:40px;border-top:1px solid var(--line)}
