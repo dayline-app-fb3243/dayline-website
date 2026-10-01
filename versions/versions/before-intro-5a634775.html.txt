@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dayline | Your day, in one timeline</title>
+<meta name="description" content="Dayline, a day planner and personal timeline for iPhone.">
+<style>
+:root { color-scheme: light dark; --bg: #fff; --text: #1d1d1f; --secondary: #86868b; --line: #e8e8ed; --accent: #2585ee; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.site-header { max-width: 980px; margin: 0 auto; padding: 22px 32px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.brand { color: var(--text); font-size: 20px; font-weight: 600; letter-spacing: -.025em; }
+.site-header .privacy { color: var(--secondary); font-size: 13px; font-weight: 400; }
+.hero { max-width: 760px; margin: 0 auto; padding: 88px 28px 110px; text-align: center; }
+.app-mark { display: block; width: 64px; height: 64px; margin: 0 auto 22px; border-radius: 17px; }
+.badge { display: inline-block; font-size: 12px; line-height: 1.5; font-weight: 500; color: var(--accent); background: #f0f7ff; padding: 5px 12px; border-radius: 999px; letter-spacing: .01em; }
+h1 { margin: 26px 0 18px; font-size: 64px; line-height: 1.06; font-weight: 700; letter-spacing: -.022em; }
+.intro { max-width: 470px; margin: 0 auto; color: var(--secondary); font-size: 19px; line-height: 1.47; font-weight: 400; letter-spacing: -.015em; text-wrap: balance; }
+ .policy-link { display: inline-block; margin-top: 30px; font-size: 15px; line-height: 1.5; font-weight: 400; letter-spacing: -.01em; }
+footer { max-width: 980px; margin: 0 auto; padding: 22px 32px 28px; border-top: 1px solid var(--line); color: var(--secondary); font-size: 12px; line-height: 1.5; }
+@media (max-width: 600px) { .site-header { padding: 20px 24px; } .hero { padding: 66px 24px 88px; } h1 { font-size: 44px; line-height: 1.08; letter-spacing: -.022em; } .intro { max-width: 310px; font-size: 19px; line-height: 1.47; } footer { margin: 0 24px; padding: 20px 0 26px; } }
+@media (prefers-color-scheme: dark) { :root { --bg: #000; --text: #f5f5f7; --secondary: #86868b; --line: #29292c; --accent: #2997ff; } }
+@media (prefers-reduced-motion: no-preference) { .reveal { opacity: 0; transform: translateY(22px); transition: opacity 1000ms cubic-bezier(.16,1,.3,1), transform 1000ms cubic-bezier(.16,1,.3,1); } .reveal.is-visible { opacity: 1; transform: translateY(0); } .app-mark.reveal { transform: translateY(8px) scale(1.05); transition-duration:1100ms; } .app-mark.reveal.is-visible { transform:translateY(0) scale(1); } .feature-copy p.reveal { transition-delay:120ms; } .hero h1.reveal { transition-delay:80ms; } .intro.reveal { transition-delay:150ms; } .policy-link.reveal { transition-delay:220ms; } }
+
+.feature { width:100%; padding:56px 28px; background:var(--bg); }
+.feature:nth-of-type(even) { background:var(--bg); }
+.feature-block { max-width:980px; margin:auto; display:grid; grid-template-columns:1fr; align-items:center; gap:56px; }
+.feature-copy { width:100%; max-width:640px; margin:auto; text-align:left; border-top:1px solid var(--line); padding-top:40px; }
+.feature h2 { margin:0 0 24px; font-size:32px; line-height:1.14; letter-spacing:-.022em; font-weight:700; text-wrap:balance; }
+.feature p { margin:0; font-size:19px; line-height:1.47; letter-spacing:-.012em; color:var(--text); text-wrap:pretty; }
+.feature-media:empty { display:none; }
+.feature-media img { display:block; max-width:100%; height:auto; }
+.feature-block:has(.feature-media img) { grid-template-columns:1fr 1fr; }
+:root { --panel:#f5f5f7; }
+@media(prefers-color-scheme:dark) { :root { --panel:#1d1d1f; } }
+@media(max-width:600px) { .feature { padding:36px 24px; } .feature h2 { font-size:26px; } .feature p { font-size:17px; } .feature-block:has(.feature-media img) { grid-template-columns:1fr; } }
+
+.feature-media { width:210px; height:430px; margin:auto; border:2px solid var(--line); border-radius:36px; display:grid; place-items:center; padding:24px; color:var(--secondary); position:relative; }
+.feature-media:before { content:""; position:absolute; width:70px; height:16px; border:1px solid var(--line); border-radius:12px; top:14px; left:calc(50% - 35px); }
+.feature-media span { font-size:13px; line-height:1.5; text-align:center; }
+.feature-block { grid-template-columns:240px 1fr; }
+.feature-copy { padding-top:32px; }
+@media(max-width:600px) { .feature-block { grid-template-columns:1fr; gap:32px; } .feature { padding:52px 24px; } .feature-media { width:190px; height:390px; } }
+@media(prefers-reduced-motion:no-preference) { .scroll-reveal { opacity:0; transform:translateY(36px); will-change:opacity,transform; } }
+@supports(animation-timeline:view()) { @media(prefers-reduced-motion:no-preference) { .scroll-reveal { animation:scroll-flow linear both; animation-timeline:view(); animation-range:entry 0% entry 80%; } @keyframes scroll-flow { from { opacity:0;transform:translateY(36px); } to { opacity:1;transform:translateY(0); } } } }
+
+.overview { max-width:640px; margin:auto; padding:20px 24px 56px; }
+.overview h2 { font-size:26px;line-height:1.15;letter-spacing:-.022em;margin:0 0 18px; }
+.overview p { font-size:17px;line-height:1.47;margin:0 0 28px;color:var(--text); }
+.scroll-mark { width:64px;height:64px;margin:0 auto 22px;transform-origin:center; }
+.scroll-mark .app-mark { margin:0; }
+@media(prefers-reduced-motion:no-preference) { .scroll-mark { will-change:transform; } }
+
+.feature-copy h3 { margin:32px 0 16px;font-size:20px;line-height:1.3;letter-spacing:-.015em; }
+.feature-copy ol { padding-left:22px;margin:0; }
+.feature-copy li { font-size:17px;line-height:1.55;margin:18px 0;padding-left:6px; }
+@media(max-width:600px) { .feature-copy { padding-bottom:0; } .overview { padding-bottom:16px; } }
+.scroll-mark { overflow:visible; }
+
+.text-line { display:block; text-wrap:initial; }
+.hero h1 { min-height:150px; }
+.hero-kicker { display:block;font-size:44px;line-height:1.08; }
+.hero-headline { display:block;font-size:44px;line-height:1.08; }
+@media(min-width:601px) { .hero h1 { min-height:210px; } .hero-kicker { display:block;font-size:64px; } .hero-headline { display:block;font-size:64px; } }
+@supports(animation-timeline:view()) { @media(prefers-reduced-motion:no-preference) { .text-line.scroll-reveal { animation-timing-function:cubic-bezier(.25,.1,.25,1);animation-range:entry 0% cover 35%; } } }
+@media(prefers-reduced-motion:no-preference) {
+ .text-line { opacity:0;transform:translateY(24px);will-change:opacity,transform; }
+ .hero .text-line,.overview .text-line { animation:line-entrance 1800ms cubic-bezier(.25,.1,.25,1) both;animation-delay:var(--line-delay); }
+ @keyframes line-entrance { from {opacity:0;transform:translateY(24px)} to {opacity:1;transform:translateY(0)} }
+}
+
+.feature { padding-top:0;padding-bottom:0; }
+.feature-block { display:flex;flex-direction:column;border-top:1px solid var(--line);padding:36px 0 48px;gap:28px; }
+.feature-copy { order:0;border:0;padding:0; }
+.feature-media { order:1; }
+.feature:last-of-type .feature-block { border-bottom:1px solid var(--line); }
+
+.hero h1 { position:relative;min-height:0;margin:20px 0 18px; }
+.scroll-mark,.scroll-mark .app-mark { width:72px;height:72px; }
+.scroll-mark { margin-bottom:0;transform-origin:center; }
+.scroll-mark .app-mark { border-radius:0; }
+.hero-phrase { position:absolute;inset:0;width:100%;display:block;will-change:transform,opacity; }
+
+/* Original CSS hardware frame. Fixed geometry, no images or scroll effects. */
+.feature-media { border:0;padding:0;border-radius:34px;background:linear-gradient(90deg,#797977,#d6d6d3 2%,#92928f 4%,#a7a7a4 96%,#ddddda 98%,#747471);box-shadow:inset 0 0 0 1px #878784;flex-shrink:0;opacity:1;transform:none;animation:none;will-change:auto;visibility:visible; }
+.feature-media:before,.feature-media:after { display:none; }
+.phone-screen { position:absolute;inset:3px;border:3px solid #111;border-radius:31px;background:#fff;overflow:hidden; }
+.phone-island { position:absolute;top:5px;left:50%;transform:translateX(-50%);width:54px;height:16px;border-radius:12px;background:#050505; }
+.phone-island:after { content:"";position:absolute;right:5px;top:5px;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#16284b,#080c16 65%); }
+.phone-time { position:absolute;left:17px;top:9px;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;font-size:8px!important;font-weight:600;letter-spacing:-.2px;line-height:10px;color:#000; }
+.phone-status { position:absolute;right:11px;top:9px;width:43px;height:10px; }
+.phone-home { position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:64px;height:2.5px;border-radius:3px;background:#000; }
+.phone-button { position:absolute;width:2px;background:linear-gradient(90deg,#747471,#c3c3bf);border-radius:1px; }
+.phone-action { left:-2px;top:16%;height:13px; }
+.phone-volume-up { left:-2px;top:23%;height:28px; }
+.phone-volume-down { left:-2px;top:32%;height:28px; }
+.phone-power { right:-2px;top:26%;height:40px; }
+.phone-camera { right:-1px;top:58%;height:24px;width:1px;background:#898986; }
+.overview { padding-top:0; }
+.overview:before { content:"";display:block;border-top:1px solid var(--line);margin-bottom:36px; }
+</style>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "yqswwnkluh");
+</script>
+</head>
+<body>
+<header class="site-header"><a class="brand" href="/">Dayline</a></header>
+<main class="hero">
+<div class="scroll-mark"><svg class="app-mark" aria-label="Dayline spiral logo" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 7680 7680" version="1.2">
+<g id="surface1">
+
+<path style="fill:none;stroke-width:991.130864;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(14.509583%,52.156067%,93.331909%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3840 1109.964844 C 4646.980469 1109.964844 5412.613281 1466.984375 5931.328125 2085.167969 C 6450.042969 2703.347656 6668.691406 3519.347656 6528.558594 4314.066406 C 6388.429688 5108.785156 5903.882812 5800.789062 5205.015625 6204.277344 C 4506.152344 6607.769531 3664.585938 6681.394531 2906.273438 6405.394531 C 2147.960938 6129.390625 1550.609375 5532.039062 1274.605469 4773.726562 C 998.605469 4015.414062 1072.230469 3173.847656 1475.722656 2474.984375 "/>
+<path style="fill:none;stroke-width:991.130864;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(14.509583%,52.156067%,93.331909%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3840 2278.082031 C 4207.210938 2278.082031 4562.679688 2407.464844 4843.980469 2643.503906 C 5125.28125 2879.542969 5314.421875 3207.144531 5378.1875 3568.777344 C 5441.953125 3930.40625 5376.265625 4302.945312 5192.660156 4620.957031 C 4913.648438 5104.214844 4398.019531 5401.917969 3840 5401.917969 C 3281.980469 5401.917969 2766.351562 5104.214844 2487.339844 4620.957031 "/>
+</g>
+</svg></div>
+<h1 aria-live="off"><span class="hero-kicker" style="--line-delay:160ms">Your day.</span><span class="hero-headline" style="--line-delay:340ms">One clear timeline.</span></h1>
+<p class="intro">A day planner with one clean visual timeline and a built-in assistant.</p>
+<a class="policy-link" href="/privacy">Read our privacy policy <span aria-hidden="true">›</span></a>
+</main>
+
+<section class="overview" aria-labelledby="overview-title"><h2 id="overview-title">Meet your day in Dayline.</h2><p>Plan your day in one visual timeline. Keep your photos, places and journal close, then use the built-in assistant to search your day.</p></section>
+<section class="feature" aria-labelledby="timeline-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><span class="phone-time">9:41</span><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 100 24" aria-hidden="true"><g fill="#000"><rect x="0" y="15" width="5" height="7" rx="1.2"/><rect x="7" y="11" width="5" height="11" rx="1.2"/><rect x="14" y="7" width="5" height="15" rx="1.2"/><rect x="21" y="3" width="5" height="19" rx="1.2"/><path d="M34 7.5a22 22 0 0 1 28 0l-3.4 3.6a17 17 0 0 0-21.2 0ZM40 14a13 13 0 0 1 16 0l-3.4 3.6a8 8 0 0 0-9.2 0ZM45.5 20a4 4 0 0 1 5 0L48 23Z"/></g><rect x="69" y="3.5" width="26" height="17" rx="4" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.8"/><rect x="72" y="6.5" width="20" height="11" rx="2" fill="#000"/><path d="M97 8v8c4-1 4-7 0-8Z" fill="#000" fill-opacity=".4"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="timeline-title">A little more clarity.<br>For your whole day.</h2><p>Add your plans, then use the timeline to see them alongside the moments from your day.</p><h3>Use your timeline</h3><ol><li>Add the plans you want to keep track of.</li><li>Open your timeline to see your plans alongside saved moments.</li><li>Use your journal to add your own notes about what happened.</li></ol></div></div></section>
+<section class="feature" aria-labelledby="assistant-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><span class="phone-time">9:41</span><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 100 24" aria-hidden="true"><g fill="#000"><rect x="0" y="15" width="5" height="7" rx="1.2"/><rect x="7" y="11" width="5" height="11" rx="1.2"/><rect x="14" y="7" width="5" height="15" rx="1.2"/><rect x="21" y="3" width="5" height="19" rx="1.2"/><path d="M34 7.5a22 22 0 0 1 28 0l-3.4 3.6a17 17 0 0 0-21.2 0ZM40 14a13 13 0 0 1 16 0l-3.4 3.6a8 8 0 0 0-9.2 0ZM45.5 20a4 4 0 0 1 5 0L48 23Z"/></g><rect x="69" y="3.5" width="26" height="17" rx="4" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.8"/><rect x="72" y="6.5" width="20" height="11" rx="2" fill="#000"/><path d="M97 8v8c4-1 4-7 0-8Z" fill="#000" fill-opacity=".4"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="assistant-title">Your day.<br>In your own words.</h2><p>Type a question or record a voice clip in Search. The assistant interprets searches with Apple's on-device models where available.</p><h3>Search your day</h3><ol><li>Open Search and type your question, or record a voice clip.</li><li>Search interpretation uses Apple's on-device models where available.</li><li>Search conversations last for the current session. Closing Search deletes temporary search audio.</li></ol></div></div></section>
+<section class="feature" aria-labelledby="moments-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><span class="phone-time">9:41</span><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 100 24" aria-hidden="true"><g fill="#000"><rect x="0" y="15" width="5" height="7" rx="1.2"/><rect x="7" y="11" width="5" height="11" rx="1.2"/><rect x="14" y="7" width="5" height="15" rx="1.2"/><rect x="21" y="3" width="5" height="19" rx="1.2"/><path d="M34 7.5a22 22 0 0 1 28 0l-3.4 3.6a17 17 0 0 0-21.2 0ZM40 14a13 13 0 0 1 16 0l-3.4 3.6a8 8 0 0 0-9.2 0ZM45.5 20a4 4 0 0 1 5 0L48 23Z"/></g><rect x="69" y="3.5" width="26" height="17" rx="4" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.8"/><rect x="72" y="6.5" width="20" height="11" rx="2" fill="#000"/><path d="M97 8v8c4-1 4-7 0-8Z" fill="#000" fill-opacity=".4"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="moments-title">The moments.<br>And the memories.</h2><p>Allow access to the photos and places you want to include. Add journal text, voice clips or videos to keep your own notes about the day.</p><h3>Choose what to include</h3><ol><li>Allow Dayline to access the photos you choose in iOS Settings.</li><li>Photo dates and saved locations help place memories in your day.</li><li>Add journal text, voice clips or videos when you want to keep a personal note.</li></ol></div></div></section>
+<section class="feature" aria-labelledby="privacy-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><span class="phone-time">9:41</span><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 100 24" aria-hidden="true"><g fill="#000"><rect x="0" y="15" width="5" height="7" rx="1.2"/><rect x="7" y="11" width="5" height="11" rx="1.2"/><rect x="14" y="7" width="5" height="15" rx="1.2"/><rect x="21" y="3" width="5" height="19" rx="1.2"/><path d="M34 7.5a22 22 0 0 1 28 0l-3.4 3.6a17 17 0 0 0-21.2 0ZM40 14a13 13 0 0 1 16 0l-3.4 3.6a8 8 0 0 0-9.2 0ZM45.5 20a4 4 0 0 1 5 0L48 23Z"/></g><rect x="69" y="3.5" width="26" height="17" rx="4" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.8"/><rect x="72" y="6.5" width="20" height="11" rx="2" fill="#000"/><path d="M97 8v8c4-1 4-7 0-8Z" fill="#000" fill-opacity=".4"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="privacy-title">Your day stays<br>your business.</h2><p>Your timeline and journal are stored on your device in this beta. No ads or third-party tracking. Sign-in and maps use online services.</p><h3>Know where your data goes</h3><ol><li>Your plans, journal and saved timeline data are stored locally in this beta.</li><li>Sign-in uses an online account service. Maps and place features use Apple services.</li><li>There are no ads, third-party tracking or an app analytics service in this beta.</li></ol></div></div></section>
+
+<section class="feature" aria-labelledby="how-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><span class="phone-time">9:41</span><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 100 24" aria-hidden="true"><g fill="#000"><rect x="0" y="15" width="5" height="7" rx="1.2"/><rect x="7" y="11" width="5" height="11" rx="1.2"/><rect x="14" y="7" width="5" height="15" rx="1.2"/><rect x="21" y="3" width="5" height="19" rx="1.2"/><path d="M34 7.5a22 22 0 0 1 28 0l-3.4 3.6a17 17 0 0 0-21.2 0ZM40 14a13 13 0 0 1 16 0l-3.4 3.6a8 8 0 0 0-9.2 0ZM45.5 20a4 4 0 0 1 5 0L48 23Z"/></g><rect x="69" y="3.5" width="26" height="17" rx="4" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.8"/><rect x="72" y="6.5" width="20" height="11" rx="2" fill="#000"/><path d="M97 8v8c4-1 4-7 0-8Z" fill="#000" fill-opacity=".4"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="how-title">Start with your plans.</h2><p>Add the plans you want to keep track of. Your timeline gives them one place to live, alongside your journal and saved moments.</p><h3>Make space for your plans</h3><ol><li>Start with the plans you want to keep track of today.</li><li>Use the visual timeline to keep those plans in one place.</li><li>Add journal notes and recordings as the day unfolds.</li></ol></div></div></section>
+<section class="feature" aria-labelledby="build-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><span class="phone-time">9:41</span><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 100 24" aria-hidden="true"><g fill="#000"><rect x="0" y="15" width="5" height="7" rx="1.2"/><rect x="7" y="11" width="5" height="11" rx="1.2"/><rect x="14" y="7" width="5" height="15" rx="1.2"/><rect x="21" y="3" width="5" height="19" rx="1.2"/><path d="M34 7.5a22 22 0 0 1 28 0l-3.4 3.6a17 17 0 0 0-21.2 0ZM40 14a13 13 0 0 1 16 0l-3.4 3.6a8 8 0 0 0-9.2 0ZM45.5 20a4 4 0 0 1 5 0L48 23Z"/></g><rect x="69" y="3.5" width="26" height="17" rx="4" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.8"/><rect x="72" y="6.5" width="20" height="11" rx="2" fill="#000"/><path d="M97 8v8c4-1 4-7 0-8Z" fill="#000" fill-opacity=".4"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="build-title">Let your day build.</h2><p>With your permission, Dayline saves location samples and visits, and adds photo references to your timeline. You control access in iOS Settings.</p><h3>Choose location access</h3><ol><li>Allow location access for places, routes and routines.</li><li>Choose a 1, 5 or 10 minute interval for saved route points.</li><li>Change location access in iOS Settings whenever you want.</li></ol></div></div></section>
+<section class="feature" aria-labelledby="voice-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><span class="phone-time">9:41</span><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 100 24" aria-hidden="true"><g fill="#000"><rect x="0" y="15" width="5" height="7" rx="1.2"/><rect x="7" y="11" width="5" height="11" rx="1.2"/><rect x="14" y="7" width="5" height="15" rx="1.2"/><rect x="21" y="3" width="5" height="19" rx="1.2"/><path d="M34 7.5a22 22 0 0 1 28 0l-3.4 3.6a17 17 0 0 0-21.2 0ZM40 14a13 13 0 0 1 16 0l-3.4 3.6a8 8 0 0 0-9.2 0ZM45.5 20a4 4 0 0 1 5 0L48 23Z"/></g><rect x="69" y="3.5" width="26" height="17" rx="4" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.8"/><rect x="72" y="6.5" width="20" height="11" rx="2" fill="#000"/><path d="M97 8v8c4-1 4-7 0-8Z" fill="#000" fill-opacity=".4"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="voice-title">Keep a note.<br>Or say it out loud.</h2><p>Save journal text, recordings or videos. Voice transcription uses on-device recognition. Microphone access is used only while recording.</p><h3>Keep a journal recording</h3><ol><li>Record a voice clip when you want to keep a spoken note.</li><li>Microphone and speech-recognition permissions support recording and transcription.</li><li>Transcription requires on-device recognition and does not fall back to remote speech recognition.</li></ol></div></div></section>
+<section class="feature" aria-labelledby="tips-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><span class="phone-time">9:41</span><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 100 24" aria-hidden="true"><g fill="#000"><rect x="0" y="15" width="5" height="7" rx="1.2"/><rect x="7" y="11" width="5" height="11" rx="1.2"/><rect x="14" y="7" width="5" height="15" rx="1.2"/><rect x="21" y="3" width="5" height="19" rx="1.2"/><path d="M34 7.5a22 22 0 0 1 28 0l-3.4 3.6a17 17 0 0 0-21.2 0ZM40 14a13 13 0 0 1 16 0l-3.4 3.6a8 8 0 0 0-9.2 0ZM45.5 20a4 4 0 0 1 5 0L48 23Z"/></g><rect x="69" y="3.5" width="26" height="17" rx="4" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.8"/><rect x="72" y="6.5" width="20" height="11" rx="2" fill="#000"/><path d="M97 8v8c4-1 4-7 0-8Z" fill="#000" fill-opacity=".4"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="tips-title">A few useful tips.</h2><p>Choose which photos Dayline can access. Pick your route-point interval. Change permissions any time in iOS Settings.</p><h3>Set it up your way</h3><ol><li>Choose which photos the app can access. On-device photo analysis works with locally available photos.</li><li>Pick the route-point interval that suits you.</li><li>Review permissions in iOS Settings. You stay in control of access.</li></ol></div></div></section>
+<section class="feature" aria-labelledby="choice-title"><div class="feature-block"><div class="feature-media" role="img" aria-label="Blank iPhone preview, app screenshot pending"><i class="phone-button phone-action"></i><i class="phone-button phone-volume-up"></i><i class="phone-button phone-volume-down"></i><i class="phone-button phone-power"></i><i class="phone-button phone-camera"></i><div class="phone-screen"><span class="phone-time">9:41</span><div class="phone-island"></div><svg class="phone-status" viewBox="0 0 100 24" aria-hidden="true"><g fill="#000"><rect x="0" y="15" width="5" height="7" rx="1.2"/><rect x="7" y="11" width="5" height="11" rx="1.2"/><rect x="14" y="7" width="5" height="15" rx="1.2"/><rect x="21" y="3" width="5" height="19" rx="1.2"/><path d="M34 7.5a22 22 0 0 1 28 0l-3.4 3.6a17 17 0 0 0-21.2 0ZM40 14a13 13 0 0 1 16 0l-3.4 3.6a8 8 0 0 0-9.2 0ZM45.5 20a4 4 0 0 1 5 0L48 23Z"/></g><rect x="69" y="3.5" width="26" height="17" rx="4" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.8"/><rect x="72" y="6.5" width="20" height="11" rx="2" fill="#000"/><path d="M97 8v8c4-1 4-7 0-8Z" fill="#000" fill-opacity=".4"/></svg><div class="phone-home"></div></div></div><div class="feature-copy"><h2 id="choice-title">What stays on your phone?</h2><p>Your timeline and journal stay local in this beta. Sign-in, maps and support email use online services. Profile &gt; Your data removes local app data, but does not delete your server account.</p><h3>Review your choices</h3><ol><li>Your timeline and journal do not sync to a Dayline server in this beta.</li><li>Profile > Your data signs you out and removes local app data.</li><li>This local reset does not delete your server account or every copy of your data. Read the privacy policy for the full limits.</li></ol></div></div></section>
+<footer>Dayline</footer>
+<script>
+const heroPairs=[['Your day.','One clear timeline.'],['Your privacy.','Our priority.'],['Your plans.','All in one place.'],['Your moments.','Close at hand.'],['Your journal.','In your words.']];
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+ const headline=document.querySelector('.hero h1');
+ let pair=0,busy=false;
+ setInterval(async()=>{
+  if(busy)return;busy=true;
+  const oldHeight=headline.offsetHeight;
+  await headline.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-18px)'}],{duration:750,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished;
+  headline.style.opacity='0';
+  pair=(pair+1)%heroPairs.length;[...headline.children].forEach((r,i)=>r.textContent=heroPairs[pair][i]);
+  const newHeight=headline.offsetHeight;
+  await headline.animate([{opacity:0,transform:'translateY(18px)',height:oldHeight+'px'},{opacity:1,transform:'translateY(0)',height:newHeight+'px'}],{duration:850,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished;
+  headline.style.opacity='1';headline.getAnimations().forEach(a=>a.cancel());
+  busy=false;
+ },15000);
+}
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+ document.querySelectorAll('.intro,.overview h2,.overview p,.feature-copy h2,.feature-copy h3,.feature-copy p,.feature-copy li').forEach(block => {
+  block.style.textWrap='initial';const parts=block.innerHTML.split(/<br\s*\/?\s*>/i); const lines=[];
+  parts.forEach(part => {
+   const scratch=document.createElement('span');scratch.innerHTML=part;
+   const words=scratch.textContent.trim().split(/\s+/);block.textContent='';
+   words.forEach((word,i)=> { const w=document.createElement('span');w.textContent=word;w.style.whiteSpace='nowrap';w.style.display='inline-block';block.append(w,document.createTextNode(' ')); });
+   let top=null,line='';[...block.children].forEach(w=> {if(top!==null && w.offsetTop!==top){lines.push(line.trim());line='';}top=w.offsetTop;line+=w.textContent+' ';});if(line)lines.push(line.trim());
+  });
+  block.textContent='';lines.forEach((text,i)=>{const line=document.createElement('span');line.className='text-line';line.textContent=text;line.style.setProperty('--line-delay',`${160+i*180}ms`);block.append(line);});
+ });
+ const lines=[...document.querySelectorAll('.feature-copy .text-line')];
+ if (CSS.supports('animation-timeline: view()')) {
+  lines.forEach(line=>line.classList.add('scroll-reveal'));
+ } else {
+  let queued=false;const update=()=>{queued=false;lines.forEach(line=>{const p=Math.max(0,Math.min(1,(innerHeight*.96-line.getBoundingClientRect().top)/(innerHeight*.25)));const e=1-Math.pow(1-p,3);line.style.opacity=e;line.style.transform=`translateY(${24*(1-e)}px)`;});};
+  addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(update);}},{passive:true});update();
+ }
+}
+
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+  }), {threshold: 0.15});
+  document.querySelectorAll('.policy-link, footer').forEach(element => {
+    element.classList.add('reveal'); observer.observe(element);
+  });
+}
+
+const mark=document.querySelector('.scroll-mark');
+mark.style.transform='scale(1.5)';
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+ const rings=[...mark.querySelectorAll('path')],lengths=rings.map(r=>r.getTotalLength());
+ rings.forEach((r,i)=>{r.style.strokeDasharray=lengths[i];});
+ let shown=scrollY,target=scrollY,frame=0,last=0,emptyAt=1;
+ const measure=()=>{emptyAt=innerWidth<=600?220:Math.max(220,mark.offsetTop+mark.offsetHeight);};
+ const paint=()=>{const p=Math.min(1,Math.max(0,shown/emptyAt));mark.style.transform=`scale(${1.5+.3*p})`;rings.forEach((r,i)=>{const drain=p;r.style.strokeDashoffset=lengths[i]*drain;r.style.visibility=drain>=1?'hidden':'visible';});};
+ const tick=now=>{const dt=last?Math.min(40,now-last):16;last=now;shown+=(target-shown)*(1-Math.exp(-dt/45));if(Math.abs(target-shown)<.03)shown=target;paint();if(shown!==target){frame=requestAnimationFrame(tick);}else{frame=0;last=0;}};
+ measure();paint();
+ addEventListener('scroll',()=>{target=scrollY;if(!frame)frame=requestAnimationFrame(tick);},{passive:true});
+ addEventListener('resize',()=>{measure();paint();});
+}
+
+</script>
+</body>
+</html>
