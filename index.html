@@ -212,6 +212,10 @@ html{scroll-behavior:auto!important}
 .premium-summary{color:var(--secondary)!important}
 
 .overview h2,.overview p,.overview li{will-change:auto;animation:none!important;transition-delay:0ms!important}
+
+.rendered-line{display:block;min-height:1em;}
+.rendered-line.body-enter{will-change:opacity,transform;}
+.rendered-line.body-entered{will-change:auto;}
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -306,19 +310,19 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const words=line.textContent.trim().split(/\s+/);line.textContent='';
   words.forEach((text,i)=>{const word=document.createElement('span');word.className='entrance-word';word.textContent=text;word.style.setProperty('--word-delay',`${300+Math.min(entranceLine*100,600)+i*30}ms`);line.append(word);if(i<words.length-1)line.append(document.createTextNode(' '));});entranceLine++;
  });
- // Body copy enters once as a block. No per-line scroll timelines or layout-reading scroll listener.
  document.querySelectorAll('.hero .entrance-word').forEach(element=>element.addEventListener('animationend',()=>element.classList.add('entrance-finished'),{once:true}));
- const bodyEntrance=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.setProperty('--copy-enter-ms',getComputedStyle(document.documentElement).getPropertyValue('--copy-enter-ms'));entry.target.classList.add('body-entered');bodyEntrance.unobserve(entry.target);}}),{rootMargin:'0px 0px -4% 0px',threshold:0});
- document.querySelectorAll('.overview h2,.overview p,.overview li,.feature-copy h2,.feature-copy h3,.feature-copy p,.feature-copy li').forEach(block=>{block.classList.add('body-enter');bodyEntrance.observe(block);});
-}
-
-if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-    if (entry.isIntersecting) { entry.target.style.setProperty('--copy-enter-ms',getComputedStyle(document.documentElement).getPropertyValue('--copy-enter-ms'));entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
-  }), {threshold: 0.15});
-  document.querySelectorAll('footer').forEach(element => {
-    element.classList.add('reveal'); observer.observe(element);
-  });
+ const bodyEntrance=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.setProperty('--copy-enter-ms',getComputedStyle(document.documentElement).getPropertyValue('--copy-enter-ms'));entry.target.classList.add('body-entered');bodyEntrance.unobserve(entry.target);}}),{rootMargin:'0px',threshold:0});
+ const selector='.overview h2,.overview p,.overview li,.feature-copy h2,.feature-copy h3,.feature-copy p,.feature-copy li,footer';
+ const original=new Map([...document.querySelectorAll(selector)].map(block=>[block,block.innerHTML]));
+ const splitLines=(block,rebuild=false)=>{
+  const entered=rebuild&&[...block.querySelectorAll('.rendered-line')].some(line=>line.classList.contains('body-entered'));
+  block.querySelectorAll('.rendered-line').forEach(line=>bodyEntrance.unobserve(line));block.innerHTML=original.get(block);block.style.textWrap='initial';
+  const walker=document.createTreeWalker(block,NodeFilter.SHOW_TEXT);const texts=[];while(walker.nextNode())texts.push(walker.currentNode);
+  texts.forEach(text=>{const fragment=document.createDocumentFragment();text.textContent.split(/(\s+)/).filter(Boolean).forEach(value=>{if(/^\s+$/.test(value)){fragment.append(document.createTextNode(value))}else{const word=document.createElement('span');word.className='line-measure-word';word.textContent=value;word.style.whiteSpace='nowrap';word.style.display='inline-block';fragment.append(word)}});text.replaceWith(fragment)});
+  const words=[...block.querySelectorAll('.line-measure-word')],groups=[];words.forEach(word=>{const y=word.getBoundingClientRect().top;let group=groups.at(-1);if(!group||Math.abs(group.y-y)>2){group={y,words:[]};groups.push(group)}group.words.push(word)});
+  const lines=groups.map(group=>{const line=document.createElement('span');line.className='rendered-line body-enter';const range=document.createRange();range.setStartBefore(group.words[0]);range.setEndAfter(group.words.at(-1));line.append(range.cloneContents());line.querySelectorAll('.line-measure-word').forEach(word=>word.replaceWith(document.createTextNode(word.textContent)));if(entered)line.classList.add('body-entered');return line});block.replaceChildren(...lines);lines.forEach(line=>{if(!entered)bodyEntrance.observe(line)});
+ };
+ original.forEach((_,block)=>splitLines(block));let lineResize;let measuredWidth=innerWidth;addEventListener('resize',()=>{if(innerWidth===measuredWidth)return;clearTimeout(lineResize);lineResize=setTimeout(()=>{measuredWidth=innerWidth;original.forEach((_,block)=>splitLines(block,true))},150)},{passive:true});
 }
 
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
