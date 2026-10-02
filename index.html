@@ -207,9 +207,6 @@ html{scroll-behavior:auto!important}
 
 .premium-overview{padding-top:0;padding-bottom:32px;scroll-margin-top:88px}.premium-overview ul{padding-left:22px;max-width:640px}.premium-overview li{font-size:17px;line-height:1.55;margin:12px 0}
 
-/* A flick must never outrun entrance opacity or translated content. */
-@media(prefers-reduced-motion:no-preference){html.scroll-fast .body-enter,html.scroll-fast .phone-enter,html.scroll-fast footer.reveal,html.scroll-fast .overview .text-line{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}}
-
 .premium-summary{color:var(--secondary)!important}
 
 .overview h2,.overview p,.overview li{will-change:auto;animation:none!important;transition-delay:0ms!important}
@@ -270,7 +267,7 @@ fill="var(--status-fill,#000)" stroke="none">
 // Passive scroll sampling: no layout reads, wheel/touch handlers or scroll cancellation.
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
  const root=document.documentElement;let lastY=scrollY,lastTime=performance.now(),scheduled=false,resetTimer=0,lastLevel=-1;
- const setSpeed=level=>{root.classList.toggle('scroll-fast',level>=.35);level=Math.round(level*20)/20;if(level===lastLevel)return;lastLevel=level;root.style.setProperty('--copy-enter-ms',Math.round(650-560*level)+'ms');root.style.setProperty('--phone-enter-ms',Math.round(850-730*level)+'ms');};
+ const setSpeed=level=>{level=Math.round(level*20)/20;if(level===lastLevel)return;lastLevel=level;root.style.setProperty('--copy-enter-ms',Math.round(650-615*level)+'ms');root.style.setProperty('--phone-enter-ms',Math.round(850-805*level)+'ms');};
  const sample=()=>{scheduled=false;const now=performance.now(),y=scrollY,dt=Math.max(8,Math.min(50,now-lastTime)),speed=Math.abs(y-lastY)/dt;lastY=y;lastTime=now;setSpeed(Math.max(0,Math.min(1,(speed-.25)/1.75)));clearTimeout(resetTimer);resetTimer=setTimeout(()=>{lastY=scrollY;lastTime=performance.now();setSpeed(0);},220);};
  addEventListener('scroll',sample,{passive:true});setSpeed(0);
 }
@@ -308,13 +305,13 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
  });
  // Body copy enters once as a block. No per-line scroll timelines or layout-reading scroll listener.
  document.querySelectorAll('.hero .entrance-word').forEach(element=>element.addEventListener('animationend',()=>element.classList.add('entrance-finished'),{once:true}));
- const bodyEntrance=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('body-entered');bodyEntrance.unobserve(entry.target);}}),{rootMargin:'0px 0px -4% 0px',threshold:0});
+ const bodyEntrance=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.setProperty('--copy-enter-ms',getComputedStyle(document.documentElement).getPropertyValue('--copy-enter-ms'));entry.target.classList.add('body-entered');bodyEntrance.unobserve(entry.target);}}),{rootMargin:'0px 0px -4% 0px',threshold:0});
  document.querySelectorAll('.overview h2,.overview p,.overview li,.feature-copy h2,.feature-copy h3,.feature-copy p,.feature-copy li').forEach(block=>{block.classList.add('body-enter');bodyEntrance.observe(block);});
 }
 
 if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-    if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+    if (entry.isIntersecting) { entry.target.style.setProperty('--copy-enter-ms',getComputedStyle(document.documentElement).getPropertyValue('--copy-enter-ms'));entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
   }), {threshold: 0.15});
   document.querySelectorAll('footer').forEach(element => {
     element.classList.add('reveal'); observer.observe(element);
@@ -322,7 +319,7 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
 }
 
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
- const entrance=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('phone-entered');entrance.unobserve(entry.target);}}),{threshold:.08});
+ const entrance=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.setProperty('--phone-enter-ms',getComputedStyle(document.documentElement).getPropertyValue('--phone-enter-ms'));entry.target.classList.add('phone-entered');entrance.unobserve(entry.target);}}),{threshold:.08});
  document.querySelectorAll('.feature-media').forEach(e=>{e.classList.add('phone-enter');entrance.observe(e);});
 }
 const mark=document.querySelector('.scroll-mark');
