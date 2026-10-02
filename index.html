@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en-US">
-<head>
+<head><meta name="color-scheme" content="light dark"><style>html{background:#fff;color-scheme:light dark}@media(prefers-color-scheme:dark){html{background:#000}}</style>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script>try{if(sessionStorage.getItem("dayline-return")==="1"){sessionStorage.removeItem("dayline-return");document.documentElement.classList.add("return-home");}}catch(e){}</script>
@@ -232,7 +232,7 @@ html{scroll-behavior:auto!important}
 <meta property="og:site_name" content="Dayline">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Dayline","url":"https://usedayline.com/","operatingSystem":"iOS","applicationCategory":"LifestyleApplication","description":"Review your places, routes and journal in one timeline. Explore Search, photos and schedule settings in the current Dayline beta for iPhone."}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"DAYLINE","url":"https://usedayline.com/"}</script>
-</head>
+<style>html.return-home body{animation:none!important;opacity:1!important;transform:none!important}</style></head>
 <body id="top"><svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden"><defs><symbol id="status-cellular" viewBox="0 0 67 47"><g fill="var(--status-fill,#000)"><rect x="3" y="24" width="10" height="19" rx="5"/><rect x="20" y="17" width="10" height="26" rx="5"/><rect x="37" y="10" width="10" height="33" rx="5"/><rect x="54" y="2" width="10" height="41" rx="5"/></g></symbol><symbol id="status-wifi" viewBox="0 0 62 48"><g transform="translate(0.000000,48.000000) scale(0.100000,-0.100000)"
 fill="var(--status-fill,#000)" stroke="none">
 <path d="M213 446 c-69 -16 -89 -25 -151 -69 -33 -24 -42 -36 -40 -56 5 -42
@@ -373,5 +373,5 @@ window.DaylineScreenshots={set(sectionId,{light,dark,alt="Dayline app screenshot
  section.querySelector('.feature-media').setAttribute('aria-label',alt);
 }};
 </script>
-</body>
+<script>document.addEventListener('click',event=>{const link=event.target.closest('a.brand');if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;const target=new URL(link.href);if(target.origin===location.origin&&target.pathname.replace(/\/$/,'')===location.pathname.replace(/\/$/,'')){event.preventDefault();scrollTo({top:0,behavior:'smooth'});}});</script></body>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </html>
