@@ -1,4 +1,4 @@
-<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dayline | Dayline +</title><link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any"><link rel="canonical" href="https://usedayline.com/premium"><meta name="description" content="Explore Dayline Dayline +: intelligent search, photo search, themes, widgets and shared streaks."><style>
+<!doctype html><html lang="en-US"><head><meta name="color-scheme" content="dark"><style>html{background:#000;color-scheme:dark}</style><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dayline | Dayline +</title><link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any"><link rel="canonical" href="https://usedayline.com/premium"><meta name="description" content="Explore Dayline Dayline +: intelligent search, photo search, themes, widgets and shared streaks."><style>
 :root { color-scheme: light dark; --bg: #fff; --text: #1d1d1f; --secondary: #86868b; --line: #e8e8ed; --accent: #2585ee; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -236,4 +236,4 @@ if(!matchMedia('(prefers-reduced-motion:reduce)').matches){ const bodyEntrance=n
  };
  const wordmark=document.querySelector('.plus-wordmark');wordmark.classList.add('rendered-line','body-enter','body-entered');
  original.forEach((_,block)=>splitLines(block));let lineResize;let measuredWidth=innerWidth;addEventListener('resize',()=>{if(innerWidth===measuredWidth)return;clearTimeout(lineResize);lineResize=setTimeout(()=>{measuredWidth=innerWidth;original.forEach((_,block)=>splitLines(block,true))},150)},{passive:true});
-}</script></body></html>
+}</script><script>document.addEventListener('click',event=>{const link=event.target.closest('a.brand');if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;const target=new URL(link.href);if(target.origin===location.origin&&target.pathname.replace(/\/$/,'')===location.pathname.replace(/\/$/,'')){event.preventDefault();scrollTo({top:0,behavior:'smooth'});}});</script></body></html>
