@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en-US">
-<head>
+<head><meta name="color-scheme" content="light dark"><style>html{background:#fff;color-scheme:light dark}@media(prefers-color-scheme:dark){html{background:#000}}</style>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script>try{if(sessionStorage.getItem("dayline-return")==="1"){sessionStorage.removeItem("dayline-return");document.documentElement.classList.add("return-home");}}catch(e){}</script>
@@ -278,5 +278,5 @@ if(!matchMedia('(prefers-reduced-motion:reduce)').matches){ const bodyEntrance=n
   const lines=groups.map(group=>{const line=document.createElement('span');line.className='rendered-line body-enter';const range=document.createRange();range.setStartBefore(group.words[0]);range.setEndAfter(group.words.at(-1));let content=range.cloneContents(),ancestor=range.commonAncestorContainer;if(ancestor.nodeType!==1)ancestor=ancestor.parentElement;while(ancestor&&ancestor!==block){const wrap=ancestor.cloneNode(false);wrap.removeAttribute('id');wrap.append(content);content=wrap;ancestor=ancestor.parentElement}line.append(content);line.querySelectorAll('.line-measure-word').forEach(word=>word.replaceWith(document.createTextNode(word.textContent)));if(entered)line.classList.add('body-entered');return line});block.replaceChildren(...lines);lines.forEach(line=>{if(!entered)bodyEntrance.observe(line)});
  };
  original.forEach((_,block)=>splitLines(block));let lineResize;let measuredWidth=innerWidth;addEventListener('resize',()=>{if(innerWidth===measuredWidth)return;clearTimeout(lineResize);lineResize=setTimeout(()=>{measuredWidth=innerWidth;original.forEach((_,block)=>splitLines(block,true))},150)},{passive:true});
-}</script></body>
+}</script><script>document.addEventListener('click',event=>{const link=event.target.closest('a.brand');if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;const target=new URL(link.href);if(target.origin===location.origin&&target.pathname.replace(/\/$/,'')===location.pathname.replace(/\/$/,'')){event.preventDefault();scrollTo({top:0,behavior:'smooth'});}});</script></body>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </html>
